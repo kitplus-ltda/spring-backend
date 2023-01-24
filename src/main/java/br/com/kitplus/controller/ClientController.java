@@ -51,4 +51,9 @@ public class ClientController implements ClientsApi {
         return ResponseEntity.ok(cardsService.createCard(request));
     }
 
+    @GetMapping("/heath")
+    public String heathCheck() {
+        return "Everything is good!!";
+    }
+
 }
