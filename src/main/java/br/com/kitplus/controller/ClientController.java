@@ -2,12 +2,16 @@ package br.com.kitplus.controller;
 
 import br.com.kitplus.Api.ClientsApi;
 import br.com.kitplus.models.Clients.ClientResponseDTO;
+import br.com.kitplus.models.Clients.CustomerRequest;
 import br.com.kitplus.service.CardsService;
 import br.com.kitplus.service.ClientService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadopago.client.cardtoken.CardTokenRequest;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.CardToken;
+import com.mercadopago.resources.customer.Customer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +41,28 @@ public class ClientController implements ClientsApi {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(clientResponseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/client_by_id")
+    public ResponseEntity<Customer> getClientByiD(@RequestParam String id)  throws MPException, MPApiException{
+        Customer clientCustomer = clientService.getCustomerById(id);
+        if(clientCustomer == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(clientCustomer, HttpStatus.OK);
+    }
+
+    @PostMapping("/create_customer")
+        public ResponseEntity<Customer> createCustomer(@RequestBody(required = false) Object customer) throws MPException, MPApiException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,  CustomerRequest.class);
+
+        Customer customerResponse =  clientService.createClient(customerReq);
+        if(customerResponse == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
     @PostMapping("/create_card")

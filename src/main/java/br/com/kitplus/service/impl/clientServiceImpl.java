@@ -29,6 +29,7 @@ public class clientServiceImpl implements ClientService {
     private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {
     };
 
+
     @Value("${url.mp}")
     private String urlMp;
 
@@ -44,7 +45,7 @@ public class clientServiceImpl implements ClientService {
     public ClientResponseDTO getCustomerClient(String email) throws MPException, MPApiException {
 
         logger.info("Calling Client By Email MP");
-        logsService.inrLog(email , "getCustomerClient");
+//        logsService.inrLog(email , "getCustomerClient");
 
 
         ResponseEntity<ClientResponseDTO> response =
@@ -60,7 +61,15 @@ public class clientServiceImpl implements ClientService {
         return null;
     }
 
-    public Customer createClient(CustomerRequest clientRequest) throws MPException, MPApiException {
+    @Override
+    public Customer getCustomerById(String id) throws MPException, MPApiException {
+        logger.info("Calling  Client by id");
+        CustomerClient client = new CustomerClient();
+        return client.get(id);
+    }
+
+
+    public Customer createClient(br.com.kitplus.models.Clients.CustomerRequest clientRequest) throws MPException, MPApiException {
 
         logger.info("Calling Create Client");
 

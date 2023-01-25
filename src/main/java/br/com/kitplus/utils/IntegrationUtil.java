@@ -59,7 +59,7 @@ public class IntegrationUtil {
                         inputLine = input.readLine();
                     }
 
-                    response.setBody(responseBuffer.toString());
+                     response.setBody(responseBuffer.toString());
         }
         if(response.getCode() == HttpURLConnection.HTTP_OK){
             return ResponseEntity.ok(new ObjectMapper().readValue(response.getBody(), referenceType));
