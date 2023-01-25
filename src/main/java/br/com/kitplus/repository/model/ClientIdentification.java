@@ -7,10 +7,9 @@ import lombok.Setter;
 @ApiModel
 @Setter
 @Getter
-public class ClientAddress {
+public class ClientIdentification {
 
-    String id = null;
-    String zipCode = null;
-    String streetName = null;
-    String streetNumber = null;
+    String type = null;
+    String number = null;
+
 }

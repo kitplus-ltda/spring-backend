@@ -1,5 +1,7 @@
 package br.com.kitplus.config;
 
+import br.com.kitplus.service.ClientServiceKitplus;
+import br.com.kitplus.service.impl.ClientServiceKitplusImpl;
 import br.com.kitplus.service.impl.cardsServiceImpl;
 import br.com.kitplus.service.impl.clientServiceImpl;
 import br.com.kitplus.repository.impl.LogsDAO;
@@ -41,6 +43,9 @@ public class RestTemplate {
 
     @Bean
     RegisterServices registerServices() {return  new RegisterServiceDAO();}
+
+    @Bean
+    ClientServiceKitplus registerKitPlusServices() {return  new ClientServiceKitplusImpl();}
 
 
 

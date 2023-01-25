@@ -53,50 +53,55 @@ public class RegisterServiceDAO  implements RegisterServices {
             throw new Exception();
         }
     }
-    public Client postCreateUser(Client clientRegister) throws Exception {
-        try {
-            JdbcTemplate.update("BEGIN");
 
-            String sql = "INSERT INTO user_sign_in (\"password\", users, email) " +
-                    "VALUES(? , ? , ? ); ";
-            JdbcTemplate.update(sql,
-                    clientRegister.getClientDetails().getPassword(),
-                    clientRegister.getClientDetails().getUser(),
-                    clientRegister.getClientDetails().getEmail());
-
-            String sql2 = " INSERT INTO user_register ( name, last_name, document_type, document_number,  birth_date, id_user_sign_in_register ) " +
-                    "VALUES( ? , ? , ? , ? , ?, (select id from user_sign_in order by id desc limit 1) ); ";
-            JdbcTemplate.update(sql2,
-                    clientRegister.getClientDetails().getName(),
-                    clientRegister.getClientDetails().getLastName(),
-                    clientRegister.getClientDetails().getClientDocuments().getDocumentType(),
-                    clientRegister.getClientDetails().getClientDocuments().getDocumentNumber(),
-                    clientRegister.getClientDetails().getBirthDate()
-            );
-
-            String sql3 = " INSERT INTO user_address (street, neighborhood, city, state, zipcode, \"number\", id_user_sign_in_address ) " +
-                    "VALUES( ?, ?, ?, ?, ?, ? , (select id from user_sign_in order by id desc limit 1));";
-            JdbcTemplate.update(sql3,
-                    clientRegister.getClientAddress().getStreet(),
-                    clientRegister.getClientAddress().getNeighborhood(),
-                    clientRegister.getClientAddress().getCity(),
-                    clientRegister.getClientAddress().getState(),
-                    clientRegister.getClientAddress().getZipCode(),
-                    clientRegister.getClientAddress().getNumber()
-            );
-            clientRegister.getClientDetails().setId(
-                    JdbcTemplate.queryForObject("select id from user_sign_in order by id desc limit 1;", Integer.class));
-            JdbcTemplate.update("COMMIT;");
-
-            return  clientRegister;
-
-        } catch (Exception ex) {
-            JdbcTemplate.update("ROLLBACK");
-
-            Client clientRegisterError = new Client(clientRegister);
-            clientRegisterError.setErrorInfo(ex.getMessage());
-
-            return clientRegisterError;
-        }
+    @Override
+    public String register(Client clientRegister) throws Exception {
+        return null;
     }
+//    public Client postCreateUser(Client clientRegister) throws Exception {
+//        try {
+//            JdbcTemplate.update("BEGIN");
+//
+//            String sql = "INSERT INTO user_sign_in (\"password\", users, email) " +
+//                    "VALUES(? , ? , ? ); ";
+//            JdbcTemplate.update(sql,
+//                    clientRegister.getClientDetails().getPassword(),
+//                    clientRegister.getClientDetails().getUser(),
+//                    clientRegister.getClientDetails().getEmail());
+//
+//            String sql2 = " INSERT INTO user_register ( name, last_name, document_type, document_number,  birth_date, id_user_sign_in_register ) " +
+//                    "VALUES( ? , ? , ? , ? , ?, (select id from user_sign_in order by id desc limit 1) ); ";
+//            JdbcTemplate.update(sql2,
+//                    clientRegister.getClientDetails().getName(),
+//                    clientRegister.getClientDetails().getLastName(),
+//                    clientRegister.getClientDetails().getClientDocuments().getDocumentType(),
+//                    clientRegister.getClientDetails().getClientDocuments().getDocumentNumber(),
+//                    clientRegister.getClientDetails().getBirthDate()
+//            );
+//
+//            String sql3 = " INSERT INTO user_address (street, neighborhood, city, state, zipcode, \"number\", id_user_sign_in_address ) " +
+//                    "VALUES( ?, ?, ?, ?, ?, ? , (select id from user_sign_in order by id desc limit 1));";
+//            JdbcTemplate.update(sql3,
+//                    clientRegister.getClientAddress().getStreet(),
+//                    clientRegister.getClientAddress().getNeighborhood(),
+//                    clientRegister.getClientAddress().getCity(),
+//                    clientRegister.getClientAddress().getState(),
+//                    clientRegister.getClientAddress().getZipCode(),
+//                    clientRegister.getClientAddress().getNumber()
+//            );
+//            clientRegister.getClientDetails().setId(
+//                    JdbcTemplate.queryForObject("select id from user_sign_in order by id desc limit 1;", Integer.class));
+//            JdbcTemplate.update("COMMIT;");
+//
+//            return  clientRegister;
+//
+//        } catch (Exception ex) {
+//            JdbcTemplate.update("ROLLBACK");
+//
+//            Client clientRegisterError = new Client(clientRegister);
+//            clientRegisterError.setErrorInfo(ex.getMessage());
+//
+//            return clientRegisterError;
+//        }
+//    }
 }

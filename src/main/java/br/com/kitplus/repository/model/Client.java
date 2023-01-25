@@ -7,14 +7,16 @@ import lombok.Setter;
 @ApiModel
 @Setter
 @Getter
-public class Client extends Error {
-    ClientDetails clientDetails ;
-    ClientAddress clientAddress ;
-    public Client(){
+public class Client {
 
-    }
-    public Client(Client clientRegister){
-        clientRegister.setClientAddress(null);
-        clientRegister.setClientDetails(null);
-    }
+    String email;
+    String firstName;
+    String lastName;
+    String defaultCard;
+    String dateRegistred;
+    String description;
+    ClientPhone clientPhone ;
+    ClientIdentification clientIdentification ;
+    ClientAddress clientAddress;
+
 }

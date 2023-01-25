@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
 @Configurable
 public interface RegisterServices {
      Client getClientDetails(Integer userId) throws Exception;
-     Client postCreateUser(Client clientRegister) throws Exception;
+     String register(Client clientRegister) throws Exception;
 }
