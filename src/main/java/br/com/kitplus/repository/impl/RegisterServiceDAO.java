@@ -2,7 +2,7 @@ package br.com.kitplus.repository.impl;
 
 
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
-import br.com.kitplus.repository.model.ClientRegister;
+import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class RegisterServiceDAO  implements RegisterServices {
 
 
     @Override
-    public ClientRegister getClientDetails(Integer userId) throws Exception {
+    public Client getClientDetails(Integer userId) throws Exception {
         try {
 
             String sql = " select" +
@@ -45,7 +45,7 @@ public class RegisterServiceDAO  implements RegisterServices {
                     " and adr.id_user_sign_in_address = reg.id_user_sign_in_register" +
                     " and sig.id = ? ;";
 
-            ClientRegister clientRegister = JdbcTemplate.queryForObject(sql, new RegistredClientRowMapper(), userId);
+            Client clientRegister = JdbcTemplate.queryForObject(sql, new RegistredClientRowMapper(), userId);
             return clientRegister;
 
         } catch (Exception ex) {
@@ -53,7 +53,7 @@ public class RegisterServiceDAO  implements RegisterServices {
             throw new Exception();
         }
     }
-    public ClientRegister postCreateUser(ClientRegister clientRegister) throws Exception {
+    public Client postCreateUser(Client clientRegister) throws Exception {
         try {
             JdbcTemplate.update("BEGIN");
 
@@ -93,7 +93,7 @@ public class RegisterServiceDAO  implements RegisterServices {
         } catch (Exception ex) {
             JdbcTemplate.update("ROLLBACK");
 
-            ClientRegister clientRegisterError = new ClientRegister(clientRegister);
+            Client clientRegisterError = new Client(clientRegister);
             clientRegisterError.setErrorInfo(ex.getMessage());
 
             return clientRegisterError;
