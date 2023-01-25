@@ -7,13 +7,13 @@ import lombok.Setter;
 @ApiModel
 @Setter
 @Getter
-public class ClientRegister extends Error {
+public class Client extends Error {
     ClientDetails clientDetails ;
     ClientAddress clientAddress ;
-    public ClientRegister(){
+    public Client(){
 
     }
-    public ClientRegister( ClientRegister clientRegister){
+    public Client(Client clientRegister){
         clientRegister.setClientAddress(null);
         clientRegister.setClientDetails(null);
     }

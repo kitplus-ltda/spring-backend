@@ -1,4 +1,4 @@
-package br.com.kitplus.repository.controller;
+package br.com.kitplus.controller;
 
 import br.com.kitplus.Api.LogsApi;
 import br.com.kitplus.repository.service.LogsService;
@@ -13,22 +13,22 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/magu")
+@RequestMapping("/api/v1/logs")
 public class LogsController implements LogsApi {
 
     @Autowired
     LogsService logsService;
 
-    @PostMapping("/logs")
+    @PostMapping
     public ResponseEntity<HttpStatus> inputLog(@RequestParam String userName, @RequestParam String apiName) throws Exception {
-        logsService.inrLog(userName,apiName );
+        logsService.inrLog(userName, apiName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/logs")
+    @GetMapping
     public ResponseEntity<List<Logs>> getLogs() throws Exception {
         List<Logs> logs = logsService.getAllLogs();
-       return new ResponseEntity<>(logs,HttpStatus.OK);
+        return new ResponseEntity<>(logs, HttpStatus.OK);
     }
 
 }
