@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class IntegrationUtil {
 
-    @Value("${access.token}")
+    @Value("${ACCESSTOKEN}")
     private String acessToken;
 
     public <T>ResponseEntity<T> getRestCall(String curl, String Method, String Body, TypeReference<T> referenceType) throws IOException, ErrorsException {
