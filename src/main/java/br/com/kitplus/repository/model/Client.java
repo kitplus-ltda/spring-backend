@@ -1,20 +1,21 @@
 package br.com.kitplus.repository.model;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @ApiModel
-@Setter
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Client extends Error {
+    public Client(Client clientRegister) {
+    }
     ClientDetails clientDetails ;
     ClientAddress clientAddress ;
-    public Client(){
-
-    }
-    public Client(Client clientRegister){
-        clientRegister.setClientAddress(null);
-        clientRegister.setClientDetails(null);
-    }
 }

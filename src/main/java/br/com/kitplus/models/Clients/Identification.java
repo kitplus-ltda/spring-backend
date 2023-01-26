@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Identification {
     @ApiModelProperty("Document Number")
-    private BigDecimal number;
+    private String number;
 
     @ApiModelProperty("Type of Document")
     private String type;
