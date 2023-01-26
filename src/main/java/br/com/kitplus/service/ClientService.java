@@ -16,6 +16,8 @@ public interface ClientService {
 
     Customer getCustomerById(String id ) throws  MPException, MPApiException;
 
+    Customer updateClientInfo(String id, CustomerRequest customer ) throws  MPException, MPApiException;
+
     Customer createClient(CustomerRequest customer) throws MPException, MPApiException;
 
 }

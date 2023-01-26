@@ -20,7 +20,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.io.IOException;
 
 @Slf4j
@@ -35,7 +34,8 @@ public class ClientController implements ClientsApi {
     private CardsService cardsService;
 
     @GetMapping("/client")
-    public ResponseEntity<ClientResponseDTO> getClientbyEmailMP(@RequestParam String email) throws MPException, MPApiException {
+    public ResponseEntity<ClientResponseDTO> getClientbyEmailMP(@RequestParam String email)
+            throws MPException, MPApiException {
         ClientResponseDTO clientResponseDTO = clientService.getCustomerClient(email);
         if (clientResponseDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -44,22 +44,40 @@ public class ClientController implements ClientsApi {
     }
 
     @GetMapping("/client_by_id")
-    public ResponseEntity<Customer> getClientByiD(@RequestParam String id)  throws MPException, MPApiException{
+    public ResponseEntity<Customer> getClientByiD(@RequestParam String id) throws MPException, MPApiException {
         Customer clientCustomer = clientService.getCustomerById(id);
-        if(clientCustomer == null) {
+        if (clientCustomer == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(clientCustomer, HttpStatus.OK);
     }
 
-    @PostMapping("/create_customer")
-        public ResponseEntity<Customer> createCustomer(@RequestBody(required = false) Object customer) throws MPException, MPApiException {
+    @PutMapping("/update_client")
+    public ResponseEntity<Customer> putClientInfo(
+            @RequestParam String id,
+            @RequestBody Object customer)
+            throws MPException, MPApiException {
 
         ObjectMapper mapper = new ObjectMapper();
-        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,  CustomerRequest.class);
+        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,
+                CustomerRequest.class);
+        Customer customerInfo = clientService.updateClientInfo(id, customerReq);
+        if (customerInfo == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customerInfo, HttpStatus.OK);
+    }
 
-        Customer customerResponse =  clientService.createClient(customerReq);
-        if(customerResponse == null){
+    @PostMapping("/create_customer")
+    public ResponseEntity<Customer> createCustomer(@RequestBody(required = false) Object customer)
+            throws MPException, MPApiException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,
+                CustomerRequest.class);
+
+        Customer customerResponse = clientService.createClient(customerReq);
+        if (customerResponse == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
@@ -67,7 +85,8 @@ public class ClientController implements ClientsApi {
 
     @PostMapping("/create_card")
     @ApiOperation(value = "Post Credit Card")
-    public ResponseEntity<CardToken> createCard(@RequestBody CardTokenRequest card) throws MPException, MPApiException, IOException {
+    public ResponseEntity<CardToken> createCard(@RequestBody CardTokenRequest card)
+            throws MPException, MPApiException, IOException {
         CardTokenRequest request = CardTokenRequest.builder()
                 .cardId(card.getCardId())
                 .customerId(card.getCustomerId())

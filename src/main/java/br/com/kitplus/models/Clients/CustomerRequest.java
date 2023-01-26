@@ -44,5 +44,9 @@ public class CustomerRequest {
     /** Customer's description. */
     private  String description;
 
+    public Object builder() {
+        return null;
+    }
+
 
 }
