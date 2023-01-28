@@ -1,6 +1,7 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.ClientResponseDTO;
+import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.LogsService;
 import br.com.kitplus.service.ClientService;
 import br.com.kitplus.utils.CustomerUtil;

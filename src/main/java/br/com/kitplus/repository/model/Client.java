@@ -13,9 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Client extends Error {
-    public Client(Client clientRegister) {
-    }
-    ClientDetails clientDetails ;
-    ClientAddress clientAddress ;
+public class Client {
+    ClientDetails clientDetails;
+    ClientAddress clientAddress;
 }

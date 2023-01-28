@@ -1,11 +1,12 @@
 package br.com.kitplus.config;
 
+import br.com.kitplus.service.ClientKitplusService;
+import br.com.kitplus.service.impl.ClientKitplusServiceImpl;
 import br.com.kitplus.service.impl.cardsServiceImpl;
 import br.com.kitplus.service.impl.clientServiceImpl;
 import br.com.kitplus.service.impl.shippmentServiceImpl;
-import br.com.kitplus.models.Shippiment.dto.ShippmentResponseDTO;
-import br.com.kitplus.repository.impl.LogsDAO;
-import br.com.kitplus.repository.impl.RegisterServiceDAO;
+import br.com.kitplus.repository.impl.LogsImpl;
+import br.com.kitplus.repository.impl.RegisterImpl;
 import br.com.kitplus.repository.service.LogsService;
 import br.com.kitplus.repository.service.RegisterServices;
 import br.com.kitplus.service.CardsService;
@@ -40,10 +41,13 @@ public class RestTemplate {
     CardTokenClient cardTokenClient() { return new CardTokenClient();}
 
     @Bean
-    LogsService logsService() {return  new LogsDAO();}
+    LogsService logsService() {return  new LogsImpl();}
 
     @Bean
-    RegisterServices registerServices() {return  new RegisterServiceDAO();}
+    RegisterServices registerServices() {return  new RegisterImpl();}
+
+    @Bean
+    ClientKitplusService registerKitPlusServices() {return  new ClientKitplusServiceImpl();}
 
     @Bean
     ShippmentService  shippmentService() { return new shippmentServiceImpl(); } 
