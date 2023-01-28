@@ -1,22 +1,21 @@
 package br.com.kitplus.repository.model;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @ApiModel
-@Setter
 @Getter
-public class Client {
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 
-    String email;
-    String firstName;
-    String lastName;
-    String defaultCard;
-    String dateRegistred;
-    String description;
-    ClientPhone clientPhone ;
-    ClientIdentification clientIdentification ;
-    ClientAddress clientAddress;
-
+public class Client extends Error {
+    public Client(Client clientRegister) {
+    }
+    ClientDetails clientDetails ;
+    ClientAddress clientAddress ;
 }

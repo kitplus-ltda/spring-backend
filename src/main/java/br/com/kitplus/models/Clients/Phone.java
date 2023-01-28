@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Phone {
-            private int area_code;
-            private int number;
+            private String areaCode;
+            private String number;
 }

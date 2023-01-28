@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class IntegrationUtil {
 
-    @Value("${access.token}")
+    @Value("${ACCESSTOKEN}")
     private String acessToken;
 
     public <T>ResponseEntity<T> getRestCall(String curl, String Method, String Body, TypeReference<T> referenceType) throws IOException, ErrorsException {
@@ -59,7 +59,7 @@ public class IntegrationUtil {
                         inputLine = input.readLine();
                     }
 
-                    response.setBody(responseBuffer.toString());
+                     response.setBody(responseBuffer.toString());
         }
         if(response.getCode() == HttpURLConnection.HTTP_OK){
             return ResponseEntity.ok(new ObjectMapper().readValue(response.getBody(), referenceType));
