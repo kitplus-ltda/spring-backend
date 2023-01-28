@@ -2,12 +2,15 @@ package br.com.kitplus.config;
 
 import br.com.kitplus.service.impl.cardsServiceImpl;
 import br.com.kitplus.service.impl.clientServiceImpl;
+import br.com.kitplus.service.impl.shippmentServiceImpl;
+import br.com.kitplus.models.Shippiment.dto.ShippmentResponseDTO;
 import br.com.kitplus.repository.impl.LogsDAO;
 import br.com.kitplus.repository.impl.RegisterServiceDAO;
 import br.com.kitplus.repository.service.LogsService;
 import br.com.kitplus.repository.service.RegisterServices;
 import br.com.kitplus.service.CardsService;
 import br.com.kitplus.service.ClientService;
+import br.com.kitplus.service.ShippmentService;
 import br.com.kitplus.utils.IntegrationUtil;
 import com.mercadopago.client.cardtoken.CardTokenClient;
 import com.mercadopago.client.customer.CustomerClient;
@@ -42,6 +45,8 @@ public class RestTemplate {
     @Bean
     RegisterServices registerServices() {return  new RegisterServiceDAO();}
 
+    @Bean
+    ShippmentService  shippmentService() { return new shippmentServiceImpl(); } 
 
 
 }

@@ -45,7 +45,7 @@ public class clientServiceImpl implements ClientService {
                                 urlMp + "/v1/customers/search?email=" + email,
                                 "GET",
                                 null,
-                                clientResponse);
+                                clientResponse, null);
 
                 if (response.getBody() != null && response.getBody().getResults().size() != 0) {
                         return response.getBody();
