@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public class RegisterServiceDAO  implements RegisterServices {
-    private static final Logger logger = LoggerFactory.getLogger(RegisterServiceDAO.class);
+public class RegisterImpl implements RegisterServices {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterImpl.class);
 
     @Autowired
     private JdbcTemplate JdbcTemplate;

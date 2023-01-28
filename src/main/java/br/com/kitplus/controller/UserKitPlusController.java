@@ -1,7 +1,6 @@
 package br.com.kitplus.controller;
 
-import br.com.kitplus.service.ClientService;
-import br.com.kitplus.service.ClientServiceKitplus;
+import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.utils.ErrorsStack;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterServices;
@@ -22,7 +21,7 @@ public class UserKitPlusController extends ErrorsStack {
     RegisterServices registerServices;
 
     @Autowired
-    ClientServiceKitplus clientServiceKitplus;
+    ClientKitplusService clientKitplusService;
 
 
     @GetMapping("/{id}")
@@ -33,7 +32,7 @@ public class UserKitPlusController extends ErrorsStack {
 
     @PostMapping("/create_user")
     public ResponseEntity<HttpStatus> createUser(@Valid @RequestBody Client clientRegister) throws Exception {
-        clientServiceKitplus.registerClientKitPlus(clientRegister);
+        clientKitplusService.registerClientKitPlus(clientRegister);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
