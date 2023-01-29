@@ -15,9 +15,7 @@ import com.google.inject.internal.ErrorsException;
 import br.com.kitplus.models.Shippiment.dto.ShippmentRequestDTO;
 import br.com.kitplus.models.Shippiment.dto.ShippmentResponseDTO;
 import br.com.kitplus.service.ShippmentService;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
 public class shippmentServiceImpl implements ShippmentService {
 
     /* (non-Javadoc)
