@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import br.com.kitplus.service.ShippmentService;
 
 @RestController
 @RequestMapping("/api/v1/shippment")
+@CrossOrigin(origins = {"https://kitplus.com.br/"})
 public class ShippmentController {
     @Autowired
     private ShippmentService shippmentService;
