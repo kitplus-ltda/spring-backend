@@ -10,8 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 
-public class LogsDAO implements LogsService {
-
+public class LogsImpl implements LogsService {
     @Autowired
     private JdbcTemplate JdbcTemplate;
 

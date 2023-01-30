@@ -1,5 +1,6 @@
 package br.com.kitplus.controller;
 
+import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.utils.ErrorsStack;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterServices;
@@ -13,25 +14,25 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/kitplus")
+@RequestMapping("/api/v1/")
 public class UserKitPlusController extends ErrorsStack {
 
     @Autowired
     RegisterServices registerServices;
 
+    @Autowired
+    ClientKitplusService clientKitplusService;
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<Client> getUserById(@PathVariable Integer id) throws Exception {
-        Client user = registerServices.getClientDetails(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HttpStatus> getUserById(@PathVariable Integer id) throws Exception {
+        //registerServices.getClientDetails(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("user/register")
-    public ResponseEntity<Client> postCreateUser(@Valid @RequestBody Client clientRegister) throws Exception {
-        Client response = registerServices.postCreateUser(clientRegister);
-        if (this.errorStackTratement(response.getErrorInfo()) != null) {
-            response.setErrorInfo(errorStackTratement(response.getErrorInfo()));
-        }
-        return new ResponseEntity<>(response, this.errorStatusTratement(response.getErrorInfo()));
+    @PostMapping("/create_user")
+    public ResponseEntity<HttpStatus> createUser(@Valid @RequestBody Client clientRegister) throws Exception {
+        clientKitplusService.registerClientKitPlus(clientRegister);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
