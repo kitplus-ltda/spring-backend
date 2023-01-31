@@ -16,6 +16,5 @@ public class ClientKitplusServiceImpl implements ClientKitplusService {
     @Transactional
     public String registerClientKitPlus(Client client) throws Exception {
         return registerServicesDAO.register(client);
-        //TODO REGISTER CLIENT MP
     }
 }
