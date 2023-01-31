@@ -49,6 +49,12 @@ public class UserRegisterEntity {
     @OneToMany
     private List<UserAddressEntity> userAddressEntities;
 
+    @OneToMany
+    private List<OrderEntity> orderEntities;
+
+    @OneToMany
+    private List<ProductEntity> productEntities;
+
     @OneToOne
     private UserSignInEntity userSignInEntity;
 }
