@@ -23,6 +23,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/v1/shippment")
+@CrossOrigin(maxAge = 3600)
 public class ShippmentController {
     @Autowired
     private ShippmentService shippmentService;
