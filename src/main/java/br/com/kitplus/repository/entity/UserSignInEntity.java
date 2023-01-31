@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Table(name = "user_sign_in")
 public class UserSignInEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 

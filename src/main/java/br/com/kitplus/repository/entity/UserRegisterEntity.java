@@ -13,11 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_register")
-public class UserRegisterEntity {
+@Table(name = "user_register", indexes = {@Index(columnList = "id,document_number")})
+public class UserRegisterEntity  {
     private static final long serialVersionUID = -1905907502453138175L;
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE )
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -25,28 +26,29 @@ public class UserRegisterEntity {
     @Size(max = 255)
     public String name;
 
-    @Column(name="last_name", nullable = false)
+    @Column(name = "last_name", nullable = false)
     @Size(max = 255)
     public String lastName;
 
-    @Column(name="document_type" , nullable = false )
+    @Column(name = "document_type", nullable = false)
     @Size(max = 255)
     public String documentType;
 
-    @Column(name="document_number", unique = true, nullable = false)
+    @Column(name = "document_number", unique = true, nullable = false)
     @Size(max = 255)
     public String documentNumber;
 
-    @Column(name="user_email", unique = true, nullable = false)
+    @Column(name = "user_email", unique = true, nullable = false)
     @Size(max = 255)
     public String email;
 
-    @Column(name="id_mp", unique = true, nullable = false)
+    @Column(name = "id_mp", unique = true, nullable = false)
     @Size(max = 255)
     public String idPaymentIntegration;
 
-//    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY )
-//    public List<UserAddressEntity> userAddressEntities ;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="document_number")
+    private List<UserAddressEntity> userAddressEntities;
+
 }
 
 

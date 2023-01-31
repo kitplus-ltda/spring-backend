@@ -4,6 +4,7 @@ package br.com.kitplus.repository.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -18,13 +19,13 @@ import java.util.List;
         indexes = {
                 @Index(columnList = "id, document_number"),
                 @Index(columnList = "document_number")
-})
+        })
 
-public class UserAddressEntity implements Serializable {
+public class UserAddressEntity implements Serializable  {
     private static final long serialVersionUID = -1905907502453138175L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -48,17 +49,17 @@ public class UserAddressEntity implements Serializable {
     @Size(max = 255)
     public String zipcode;
 
-    @Column(name = "number",nullable = false)
+    @Column(name = "number", nullable = false)
     @Size(max = 255)
     public String number;
 
-    @Column(name = "document_number", nullable = false)
-    @Size(max = 255)
-    public String document_number;
+//    @Column(name = "document_number", nullable = false)
+//    @Size(max = 255)
+//    public String document_number;
 
-//    @ManyToOne
-//    public UserRegisterEntity userRegisterEntityList ;
-
+    @ManyToOne
+    @JoinColumn(name = "document_number" , referencedColumnName = "document_number")
+    private UserRegisterEntity document_number;
 }
 
 
