@@ -21,7 +21,7 @@ import br.com.kitplus.service.ShippmentService;
 
 @RestController
 @RequestMapping("/api/v1/shippment")
-@CrossOrigin(origins = {"https://kitplus.com.br/"})
+@CrossOrigin(maxAge = 3600)
 public class ShippmentController {
     @Autowired
     private ShippmentService shippmentService;
