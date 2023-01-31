@@ -14,11 +14,7 @@
  @Getter
  @Setter
  @Entity
- @Table(name = "user_address",
-         indexes = {
-                 @Index(columnList = "id, document_number"),
-                 @Index(columnList = "document_number")
- })
+ @Table(name = "user_address")
 
  public class UserAddressEntity implements Serializable {
      private static final long serialVersionUID = -1905907502453138175L;
@@ -52,12 +48,10 @@
      @Size(max = 255)
      public String number;
 
-     @Column(name = "document_number", nullable = false)
-     @Size(max = 255)
-     public String document_number;
 
- //    @ManyToOne
- //    public UserRegisterEntity userRegisterEntityList ;
+    @ManyToOne
+    private UserRegisterEntity userRegisterEntity;
+
 
  }
 
