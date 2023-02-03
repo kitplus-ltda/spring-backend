@@ -16,6 +16,5 @@ public class ProductCategoriesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long category_id;
-
     String name;
 }
