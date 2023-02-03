@@ -31,10 +31,6 @@
      @Size(max = 255)
      public String email;
 
-     @OneToOne
-     private UserRegisterEntity userRegisterEntity;
-
-
  }
 
 

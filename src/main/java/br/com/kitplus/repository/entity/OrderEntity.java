@@ -27,10 +27,4 @@ public class OrderEntity implements Serializable {
     private int quantidade;
     private String hora_data;
 
-    @ManyToOne
-    private UserRegisterEntity userRegisterEntity;
-
-    @OneToMany
-    private List<ProductEntity> productEntities;
-
 }

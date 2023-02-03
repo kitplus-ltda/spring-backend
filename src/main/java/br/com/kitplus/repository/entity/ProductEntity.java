@@ -42,4 +42,6 @@ public class ProductEntity implements Serializable {
     private int altura;
     private int quantidade;
     private int peso;
+
+
 }

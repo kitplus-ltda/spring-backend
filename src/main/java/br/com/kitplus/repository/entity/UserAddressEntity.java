@@ -48,9 +48,6 @@
      @Size(max = 255)
      public String number;
 
-    @ManyToOne
-    private UserRegisterEntity userRegisterEntity;
-
 
  }
 
