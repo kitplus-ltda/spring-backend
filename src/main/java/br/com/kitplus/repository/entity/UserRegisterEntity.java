@@ -18,9 +18,9 @@ public class UserRegisterEntity {
     private static final long serialVersionUID = -1905907502453138175L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Long user_id;
 
     @Column(name = "name", nullable = false)
     @Size(max = 255)
@@ -45,6 +45,7 @@ public class UserRegisterEntity {
     @Column(name = "id_mp", unique = true, nullable = false)
     @Size(max = 255)
     public String idPaymentIntegration;
+
 
 }
 

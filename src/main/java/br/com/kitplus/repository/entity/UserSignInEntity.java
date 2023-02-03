@@ -16,8 +16,8 @@
  public class UserSignInEntity {
      @Id
      @GeneratedValue(strategy = GenerationType.SEQUENCE)
-     @Column(name = "id", nullable = false)
-     private Long id;
+     @Column(name = "user_sign_id", nullable = false)
+     private Long user_sign_id;
 
      @Column(name = "password")
      @Size(max = 255)
@@ -30,6 +30,9 @@
      @Column(name = "email", unique = true)
      @Size(max = 255)
      public String email;
+
+     @OneToOne
+     UserRegisterEntity user_id_pk;
 
  }
 
