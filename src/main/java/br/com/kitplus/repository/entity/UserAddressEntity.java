@@ -1,6 +1,8 @@
 package br.com.kitplus.repository.entity;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ApiModel
 @Table(name = "user_address")
 
 public class UserAddressEntity implements Serializable {
@@ -26,30 +29,36 @@ public class UserAddressEntity implements Serializable {
 
     @Column(name = "street", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String street;
 
     @Column(name = "neighborhood", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String neighborhood;
 
     @Column(name = "city", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String city;
 
     @Column(name = "state", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String state;
 
     @Column(name = "zipcode", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String zipcode;
 
     @Column(name = "number", nullable = false)
     @Size(max = 255)
+    @ApiModelProperty
     public String number;
 
-    @ManyToOne
-    @JoinColumn(nullable = false, name = "user_id")
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "user_id_pk" , referencedColumnName = "user_id")
     UserRegisterEntity user_id_pk;
 
 }

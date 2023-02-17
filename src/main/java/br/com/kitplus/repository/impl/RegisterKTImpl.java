@@ -1,12 +1,10 @@
 package br.com.kitplus.repository.impl;
 
 
-import br.com.kitplus.repository.entity.UserRegisterEntity;
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
 import br.com.kitplus.repository.model.Client;
-import br.com.kitplus.repository.service.RegisterServices;
-import com.google.inject.internal.util.Objects;
+import br.com.kitplus.repository.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +12,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.validation.ConstraintDeclarationException;
 
 
 @Repository
-public class RegisterKTImpl implements RegisterServices {
+public class RegisterKTImpl implements RegisterService {
     private static final Logger logger = LoggerFactory.getLogger(RegisterKTImpl.class);
 
     @Autowired
@@ -68,25 +65,12 @@ public class RegisterKTImpl implements RegisterServices {
     }
 
     @Override
-    public void register(Client client) {
-        try {
-            this.entityManager.persist(client.getClientDetails());
-            client.getClientAddress().setUser_id_pk(client.getClientDetails());
-            this.entityManager.persist(client.getClientAddress());
-        } catch (Exception e) {
-            throw e;
+    public void validateRegister(Client client) throws Exception {
+        if (userRegisterEntityRepository.existsByDocumentNumber(client.getClientDetails().getDocumentNumber()) ||
+                userRegisterEntityRepository.existsByEmail(client.getClientDetails().getEmail())) {
+            throw new Exception("USR-0001");
         }
-
-    }
-
-    @Override
-    public boolean validateRegister(Client client) {
-        UserRegisterEntity document =
-                userRegisterEntityRepository
-                        .findByDocumentNumberLike(client.getClientDetails().getDocumentNumber());
-        UserRegisterEntity email =
-                userRegisterEntityRepository.findByEmail(client.getClientDetails().getEmail());
-        return Objects.equal(document, null) && Objects.equal(email, null);
+        this.entityManager.persist(client);
     }
 
 }

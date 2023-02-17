@@ -1,6 +1,8 @@
 package br.com.kitplus.repository.entity;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +14,7 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
+@ApiModel
 @Table(name = "user_sign_in")
 public class UserSignInEntity {
     @Id
@@ -21,17 +24,21 @@ public class UserSignInEntity {
 
     @Column(name = "password")
     @Size(max = 255)
+    @ApiModelProperty
     public String password;
 
-    @Column(name = "users", unique = true)
+    @Column(name = "user", unique = true)
     @Size(max = 255)
+    @ApiModelProperty
     public String user;
 
     @Column(name = "email", unique = true)
     @Size(max = 255)
+    @ApiModelProperty
     public String email;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id_pk" , referencedColumnName = "user_id" , nullable = false )
     UserRegisterEntity user_id_pk;
 
 }

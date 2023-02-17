@@ -3,7 +3,7 @@ package br.com.kitplus.controller;
 import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.utils.ErrorsStack;
 import br.com.kitplus.repository.model.Client;
-import br.com.kitplus.repository.service.RegisterServices;
+import br.com.kitplus.repository.service.RegisterService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+
+
 @Slf4j
 @RestController
 @Controller
@@ -22,7 +24,7 @@ import javax.validation.Valid;
 public class ClientKTController extends ErrorsStack {
 
     @Autowired
-    RegisterServices registerServices;
+    RegisterService registerService;
 
     @Autowired
     ClientKitplusService clientKitplusService;
@@ -35,12 +37,8 @@ public class ClientKTController extends ErrorsStack {
     }
 
     @PostMapping("/create_user")
-    public ResponseEntity<String> createUser(@Valid @RequestBody Client clientRegister) {
-        try {
+    public ResponseEntity<String> createUser(@Valid @RequestBody Client clientRegister) throws  Exception {
             clientKitplusService.registerClientKitPlus(clientRegister);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>( e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+            return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
