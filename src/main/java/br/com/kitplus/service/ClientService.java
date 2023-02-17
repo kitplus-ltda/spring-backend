@@ -5,11 +5,9 @@ import br.com.kitplus.models.Clients.CustomerRequest;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.customer.Customer;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 @Service
-@Configurable
 public interface ClientService {
 
     ClientResponseDTO getCustomerClient(String email) throws MPException, MPApiException;

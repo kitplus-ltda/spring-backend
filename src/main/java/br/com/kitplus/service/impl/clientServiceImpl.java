@@ -1,7 +1,6 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.ClientResponseDTO;
-import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.LogsService;
 import br.com.kitplus.service.ClientService;
 import br.com.kitplus.utils.CustomerUtil;
@@ -19,8 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class clientServiceImpl implements ClientService {
         private static final Logger logger = LoggerFactory.getLogger(clientServiceImpl.class);
         private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {

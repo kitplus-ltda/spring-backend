@@ -8,6 +8,7 @@ import com.google.inject.internal.ErrorsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Service
 public class IntegrationUtil {
 
     public <T>ResponseEntity<T> getRestCall(String curl, String Method, String Body, TypeReference<T> referenceType, String token) throws IOException, ErrorsException {

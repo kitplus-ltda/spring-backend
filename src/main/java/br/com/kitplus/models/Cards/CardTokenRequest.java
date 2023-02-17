@@ -1,10 +1,6 @@
 package br.com.kitplus.models.Cards;
 
-import com.mercadopago.exceptions.MPApiException;
-import com.mercadopago.exceptions.MPException;
-import com.mercadopago.net.MPHttpClient;
-import com.mercadopago.net.MPRequest;
-import com.mercadopago.net.MPResponse;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Getter;

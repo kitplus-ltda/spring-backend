@@ -1,5 +1,7 @@
 package br.com.kitplus.repository.model;
 
+import br.com.kitplus.repository.entity.UserAddressEntity;
+import br.com.kitplus.repository.entity.UserRegisterEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class Client {
-    ClientDetails clientDetails;
-    ClientAddress clientAddress;
+    UserRegisterEntity clientDetails;
+    UserAddressEntity clientAddress;
 }

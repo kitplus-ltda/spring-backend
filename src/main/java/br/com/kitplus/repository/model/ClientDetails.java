@@ -1,11 +1,10 @@
 package br.com.kitplus.repository.model;
 
+import br.com.kitplus.repository.entity.UserRegisterEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.sql.Date;
 
 @ApiModel
 @Setter
@@ -13,14 +12,6 @@ import java.sql.Date;
 @NoArgsConstructor
 public class ClientDetails {
 
-    Integer id = null;
-    String name = null;
-    String lastName = null;
-    Date birthDate = null;
-    String email = null;
-    String user = null;
-    String password = null;
-    ClientDocuments clientDocuments = null;
-
+    UserRegisterEntity client;
 
 }

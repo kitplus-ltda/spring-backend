@@ -10,8 +10,11 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class ClientAddress {
-    String id = null;
+
     String zipCode = null;
-    String streetName = null;
-    String streetNumber = null;
+    String street = null;
+    String number = null;
+    String neighborhood = null;
+    String city = null;
+    String state = null;
 }

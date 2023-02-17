@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -42,7 +41,7 @@ public class UserRegisterEntity {
     @Size(max = 255)
     public String email;
 
-    @Column(name = "id_mp", unique = true, nullable = false)
+    @Column(name = "id_mp", unique = true, nullable = true)
     @Size(max = 255)
     public String idPaymentIntegration;
 

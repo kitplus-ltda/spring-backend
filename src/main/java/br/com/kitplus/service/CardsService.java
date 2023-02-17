@@ -11,12 +11,8 @@ import com.mercadopago.resources.CardToken;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
-@Service("CardsService")
-@Configurable
+
 public interface CardsService {
-
     CardToken createCard(CardTokenRequest cardRequest) throws MPException, MPApiException;
-
-
 
 }

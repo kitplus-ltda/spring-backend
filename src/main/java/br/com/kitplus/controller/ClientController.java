@@ -5,7 +5,6 @@ import br.com.kitplus.models.Clients.ClientResponseDTO;
 import br.com.kitplus.models.Clients.CustomerRequest;
 import br.com.kitplus.service.CardsService;
 import br.com.kitplus.service.ClientService;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mercadopago.client.cardtoken.CardTokenRequest;
 import com.mercadopago.exceptions.MPApiException;
@@ -18,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -25,6 +25,7 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1")
+@Controller
 @Api(value = "API Rest Kitplus")
 
 public class ClientController implements ClientsApi {

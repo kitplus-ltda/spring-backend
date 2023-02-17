@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +24,10 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/v1/shippment")
-
+@Controller
 public class ShippmentController {
     @Autowired
     private ShippmentService shippmentService;
-
-
     
     @PostMapping("/simulator")
     public ResponseEntity<ArrayList<ShippmentResponseDTO>> simulatorShippiment(@RequestBody Object shippment)  throws Exception  { 

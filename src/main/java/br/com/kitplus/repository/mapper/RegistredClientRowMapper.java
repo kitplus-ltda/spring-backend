@@ -1,8 +1,6 @@
 package br.com.kitplus.repository.mapper;
 
-import br.com.kitplus.repository.model.ClientAddress;
-import br.com.kitplus.repository.model.ClientDetails;
-import br.com.kitplus.repository.model.ClientDocuments;
+
 import br.com.kitplus.repository.model.Client;
 import org.springframework.jdbc.core.RowMapper;
 

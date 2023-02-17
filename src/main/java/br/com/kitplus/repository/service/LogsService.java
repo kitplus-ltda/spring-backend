@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("LogsService")
+
 @Configurable
 public interface LogsService {
 
