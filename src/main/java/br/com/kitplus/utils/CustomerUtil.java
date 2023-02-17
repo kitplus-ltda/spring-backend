@@ -10,9 +10,9 @@ import com.mercadopago.client.customer.CustomerRequest;
 
 public class CustomerUtil {
 
-    public static CustomerRequest createCustomerRequest(br.com.kitplus.models.Clients.CustomerRequest customer) {
+    public static CustomerRequest createCustomerRequest(br.com.kitplus.models.Clients.CustomerRequest customer, String type) {
         return CustomerRequest.builder()
-                .email(customer.getEmail())
+                .email( type == "create" ? customer.getEmail(): null)
                 .firstName(customer.getFirstName())
                 .lastName(customer.getLastName())
                 .phone(PhoneRequest.builder()

@@ -5,10 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.internal.Errors;
 import com.google.inject.internal.ErrorsException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -16,12 +16,10 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+@Service
 public class IntegrationUtil {
 
-    @Value("${access.token}")
-    private String acessToken;
-
-    public <T>ResponseEntity<T> getRestCall(String curl, String Method, String Body, TypeReference<T> referenceType) throws IOException, ErrorsException {
+    public <T>ResponseEntity<T> getRestCall(String curl, String Method, String Body, TypeReference<T> referenceType, String token) throws IOException, ErrorsException {
         URL url = new URL(curl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         HttpHeaders headers = new HttpHeaders();
@@ -33,7 +31,7 @@ public class IntegrationUtil {
         connection.setDoOutput( true );
         connection.setDoInput(true);
         connection.setRequestProperty("Accept", "application/json");
-        connection.setRequestProperty("Authorization",  "Bearer " + acessToken);
+        connection.setRequestProperty("Token",  token);
         for(Map.Entry<String, String> entry: mapHeaders.entrySet()){
             connection.setRequestProperty(entry.getKey(), entry.getValue());
         }

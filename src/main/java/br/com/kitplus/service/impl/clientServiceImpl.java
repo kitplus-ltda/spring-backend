@@ -6,11 +6,9 @@ import br.com.kitplus.service.ClientService;
 import br.com.kitplus.utils.CustomerUtil;
 import br.com.kitplus.utils.IntegrationUtil;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.mercadopago.client.common.IdentificationRequest;
-import com.mercadopago.client.common.PhoneRequest;
-import com.mercadopago.client.customer.CustomerAddressRequest;
 import com.mercadopago.client.customer.CustomerClient;
 import com.mercadopago.client.customer.CustomerRequest;
+import com.mercadopago.core.MPRequestOptions;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.customer.Customer;
@@ -20,8 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class clientServiceImpl implements ClientService {
         private static final Logger logger = LoggerFactory.getLogger(clientServiceImpl.class);
         private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {
@@ -47,7 +46,7 @@ public class clientServiceImpl implements ClientService {
                                 urlMp + "/v1/customers/search?email=" + email,
                                 "GET",
                                 null,
-                                clientResponse);
+                                clientResponse, null);
 
                 if (response.getBody() != null && response.getBody().getResults().size() != 0) {
                         return response.getBody();
@@ -66,7 +65,7 @@ public class clientServiceImpl implements ClientService {
                         throws MPException, MPApiException {
                 logger.info("Calling Create Client");
                 CustomerClient client = new CustomerClient();
-                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest);
+                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "create");
                 return client.create(customerRequest);
         }
 
@@ -75,8 +74,12 @@ public class clientServiceImpl implements ClientService {
                         throws MPException, MPApiException {
                 logger.info("Calling Update Client");
                 CustomerClient client = new CustomerClient();
-                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest);
-                return client.update(id, customerRequest);
+                MPRequestOptions options = MPRequestOptions.builder()
+                 .connectionTimeout(10000)
+                 .connectionRequestTimeout(10000)
+                .build();
+                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "update");
+                return client.update(id, customerRequest, options);
         }
 
 }

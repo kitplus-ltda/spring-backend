@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class ClientDocuments {
-    String documentType  = null;
-    String documentNumber  = null;
+public class ClientIdentification {
+    String type = null;
+    String number = null;
 }

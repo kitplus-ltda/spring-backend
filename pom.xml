@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.kitplus</groupId>
     <artifactId>kitplus</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>kitplus</name>
     <description>Server-side kitplus</description>
 
@@ -84,16 +84,13 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>11.2.2.jre11</version>
         </dependency>
     </dependencies>
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>github</id>-->
-<!--            <name>GitHub MAGU Apache Maven Packages</name>-->
-<!--            <url>https://maven.pkg.github.com/GustavoPinheiro170/Spring-boot-Magu</url>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
     <build>
         <resources>
             <resource>

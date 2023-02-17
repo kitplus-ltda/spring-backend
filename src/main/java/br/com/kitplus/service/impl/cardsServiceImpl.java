@@ -6,12 +6,13 @@ import com.mercadopago.client.cardtoken.CardTokenRequest;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.CardToken;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class cardsServiceImpl implements CardsService {
 
-    @Autowired
-    private CardTokenClient cardTokenClient;
+
+    public CardTokenClient cardTokenClient;
 
 
     public CardToken createCard(CardTokenRequest cardRequest) throws MPException, MPApiException {
