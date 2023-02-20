@@ -1,6 +1,7 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.service.ErrorService;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.repository.service.ValidateService;
 import br.com.kitplus.service.ClientKitplusService;
@@ -18,12 +19,16 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     @Autowired
     ValidateService validateService;
 
+    @Autowired
+    private ErrorService errorService;
+
+
     @Override
     @Transactional
-    public void registerClientKitPlus(Client client) throws Exception {
-
+    public String registerClientKitPlus(Client client) throws Exception {
         this.validateService.parametrizeClient(client);
         this.registerServiceDAO.validateRegister(client);
-        //TODO REGISTRAR MERCADO PAGO
+        return "CREATED";
+
     }
 }

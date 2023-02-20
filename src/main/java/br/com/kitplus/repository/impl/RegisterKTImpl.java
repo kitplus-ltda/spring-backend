@@ -65,10 +65,10 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void validateRegister(Client client) throws Exception {
+    public void validateRegister(Client client)  {
         if (userRegisterEntityRepository.existsByDocumentNumber(client.getClientDetails().getDocumentNumber()) ||
                 userRegisterEntityRepository.existsByEmail(client.getClientDetails().getEmail())) {
-            throw new Exception("USR-0001");
+            throw new RuntimeException("USR-0001");
         }
         this.entityManager.persist(client);
     }

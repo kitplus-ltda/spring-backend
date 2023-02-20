@@ -1,17 +1,16 @@
 package br.com.kitplus.controller;
 
 import br.com.kitplus.service.ClientKitplusService;
-import br.com.kitplus.utils.ErrorsStack;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
-import io.swagger.annotations.Api;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
 import javax.validation.Valid;
 
 
@@ -21,7 +20,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/api/kitplus/v1")
 @Api(value = "API for register and update kitplus user")
-public class ClientKTController extends ErrorsStack {
+public class ClientKTController  {
 
     @Autowired
     RegisterService registerService;
@@ -37,8 +36,7 @@ public class ClientKTController extends ErrorsStack {
     }
 
     @PostMapping("/create_user")
-    public ResponseEntity<String> createUser(@Valid @RequestBody Client clientRegister) throws  Exception {
-            clientKitplusService.registerClientKitPlus(clientRegister);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<String> createUser(@Valid @RequestBody Client clientRegister) throws Exception {
+        return new ResponseEntity<>(clientKitplusService.registerClientKitPlus(clientRegister), HttpStatus.CREATED);
     }
 }

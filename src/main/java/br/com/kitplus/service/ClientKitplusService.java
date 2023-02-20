@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ClientKitplusService {
-   void registerClientKitPlus(Client client) throws Exception;
+   String registerClientKitPlus(Client client) throws Exception;
 
 }
