@@ -58,7 +58,6 @@ public class UserAddressEntity implements Serializable {
     public String number;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "user_id_pk" , referencedColumnName = "user_id")
     UserRegisterEntity user_id_pk;
 
 }

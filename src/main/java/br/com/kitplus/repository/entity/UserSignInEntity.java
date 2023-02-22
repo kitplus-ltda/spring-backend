@@ -38,7 +38,6 @@ public class UserSignInEntity {
     public String email;
 
     @ManyToOne
-    @JoinColumn(name = "user_id_pk" , referencedColumnName = "user_id" , nullable = false )
     UserRegisterEntity user_id_pk;
 
 }
