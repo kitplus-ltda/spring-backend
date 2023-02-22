@@ -2,6 +2,7 @@ package br.com.kitplus.repository.impl;
 
 
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
+import br.com.kitplus.repository.entity.UserSignInEntityRepository;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
@@ -12,6 +13,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 @Repository
@@ -25,6 +28,8 @@ public class RegisterKTImpl implements RegisterService {
     private EntityManager entityManager;
     @Autowired
     private UserRegisterEntityRepository userRegisterEntityRepository;
+    @Autowired
+    private UserSignInEntityRepository userSignInEntityRepository;
 
 
     @Override
@@ -65,12 +70,51 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void validateRegister(Client client)  {
+    public void validateRegister(Client client) {
+        this.validateParams(client);
+        this.encodePassword(client);
+        this.register(client);
+    }
+
+    private void register(Client client) {
+        try {
+            this.entityManager.persist(client);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void encodePassword(Client client) {
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+
+            m.update(client.getUserSign().getPassword().getBytes());
+
+            byte[] bytes = m.digest();
+
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            client.getUserSign().setPassword(s.toString());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validateParams(Client client) {
         if (userRegisterEntityRepository.existsByDocumentNumber(client.getClientDetails().getDocumentNumber()) ||
                 userRegisterEntityRepository.existsByEmail(client.getClientDetails().getEmail())) {
             throw new RuntimeException("USR-0001");
         }
-        this.entityManager.persist(client);
+        if (userSignInEntityRepository.existsByEmail(client.getUserSign().getEmail())) {
+            throw new RuntimeException("USR-0002");
+        }
+        if (userSignInEntityRepository.existsByUser(client.getUserSign().getUser())) {
+            throw new RuntimeException("USR-0002");
+        }
+        if(client.getUserSign().getPassword().length() < 8 ){
+            throw new RuntimeException("USR-0003");
+        }
     }
-
 }
