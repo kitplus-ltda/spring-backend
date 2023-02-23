@@ -34,21 +34,7 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     public void registerClientKitPlus(Client client) throws Exception {
         this.validateService.parametrizeClient(client);
         this.validateService.validateParamsClient(client);
-
-        //Busca no MP se cliente já existe e recupera ID
-        ClientResponseDTO checkIfClientExistInMP =
-                clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
-
-        if (checkIfClientExistInMP.getResults() != null) {
-            int size = checkIfClientExistInMP.getResults().size();
-
-            for (int i = 0 ; i < size; i++) {
-                client.getClientDetails().setIdPaymentIntegration(
-                        checkIfClientExistInMP.getResults().get(i).getId());
-            }
-
-        }
-
+        this.searchMpClient(client);
         this.registerServiceDAO.register(client);
     }
 
@@ -108,5 +94,19 @@ public class ClientKTServiceImpl implements ClientKitplusService {
             throw new MPApiException("Error", e.getApiResponse());
         }
         return null;
+    }
+
+    private void searchMpClient(Client client) throws MPException, MPApiException {
+        //Busca no MP se cliente já existe e recupera ID
+        ClientResponseDTO checkIfClientExistInMP =
+                clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
+        if (checkIfClientExistInMP.getResults() != null) {
+            int size = checkIfClientExistInMP.getResults().size();
+
+            for (int i = 0; i < size; i++) {
+                client.getClientDetails().setIdPaymentIntegration(
+                        checkIfClientExistInMP.getResults().get(i).getId());
+            }
+        }
     }
 }
