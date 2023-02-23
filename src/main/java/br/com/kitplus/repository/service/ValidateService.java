@@ -5,4 +5,5 @@ import br.com.kitplus.repository.model.Client;
 public interface ValidateService {
 
     void parametrizeClient(Client client);
+    void validateParamsClient(Client client);
 }

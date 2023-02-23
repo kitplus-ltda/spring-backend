@@ -19,17 +19,13 @@ import java.security.NoSuchAlgorithmException;
 
 @Repository
 public class RegisterKTImpl implements RegisterService {
-    private static final Logger logger = LoggerFactory.getLogger(RegisterKTImpl.class);
+    private static final Logger LOGGER  = LoggerFactory.getLogger(RegisterKTImpl.class);
 
     @Autowired
     private JdbcTemplate JdbcTemplate;
 
     @Autowired
     private EntityManager entityManager;
-    @Autowired
-    private UserRegisterEntityRepository userRegisterEntityRepository;
-    @Autowired
-    private UserSignInEntityRepository userSignInEntityRepository;
 
 
     @Override
@@ -64,57 +60,18 @@ public class RegisterKTImpl implements RegisterService {
             return clientRegister;
 
         } catch (Exception ex) {
-            logger.info(ex.getMessage());
+            LOGGER.info(ex.getMessage());
             throw new Exception();
         }
     }
 
     @Override
-    public void validateRegister(Client client) {
-        this.validateParams(client);
-        this.encodePassword(client);
-        this.register(client);
-    }
-
-    private void register(Client client) {
+    public void register(Client client) {
         try {
             this.entityManager.persist(client);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
     }
 
-    private void encodePassword(Client client) {
-        try {
-            MessageDigest m = MessageDigest.getInstance("MD5");
-
-            m.update(client.getUserSign().getPassword().getBytes());
-
-            byte[] bytes = m.digest();
-
-            StringBuilder s = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            client.getUserSign().setPassword(s.toString());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void validateParams(Client client) {
-        if (userRegisterEntityRepository.existsByDocumentNumber(client.getClientDetails().getDocumentNumber()) ||
-                userRegisterEntityRepository.existsByEmail(client.getClientDetails().getEmail())) {
-            throw new RuntimeException("USR-0001");
-        }
-        if (userSignInEntityRepository.existsByEmail(client.getUserSign().getEmail())) {
-            throw new RuntimeException("USR-0002");
-        }
-        if (userSignInEntityRepository.existsByUser(client.getUserSign().getUser())) {
-            throw new RuntimeException("USR-0002");
-        }
-        if(client.getUserSign().getPassword().length() < 8 ){
-            throw new RuntimeException("USR-0003");
-        }
-    }
 }
