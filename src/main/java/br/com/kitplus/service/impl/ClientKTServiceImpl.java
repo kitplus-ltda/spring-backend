@@ -47,44 +47,40 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     @Override
     public Customer searchCreateUserMP(Client client) throws MPApiException {
         try {
-            ClientResponseDTO clientMP = clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
-            if (Objects.equals(clientMP, null)) {
-                if (!Objects.equals(client.getClientDetails().getName(), null)) {
-                    //address info
-                    CustomerAddressRequest addressRequest = new CustomerAddressRequest();
-                    addressRequest.setStreetName(client.getClientAddress().getStreet());
-                    addressRequest.setStreetNumber(client.getClientAddress().getNumber());
-                    addressRequest.setZipCode(client.getClientAddress().getZipcode());
-                    addressRequest.setId(String.valueOf(client.getClientAddress().getAddress_id()));
+            if (Objects.equals(client.getClientDetails().getIdPaymentIntegration(), null)) {
+                //address info
+                CustomerAddressRequest addressRequest = new CustomerAddressRequest();
+                addressRequest.setStreetName(client.getClientAddress().getStreet());
+                addressRequest.setStreetNumber(client.getClientAddress().getNumber());
+                addressRequest.setZipCode(client.getClientAddress().getZipcode());
+                addressRequest.setId(String.valueOf(client.getClientAddress().getAddress_id()));
 
-                    //client info
-                    CustomerRequestMP customerMP = new CustomerRequestMP();
-                    customerMP.setFirstName(client.getClientDetails().getName());
-                    customerMP.setLastName(client.getClientDetails().getLastName());
-                    customerMP.setEmail(client.getClientDetails().getEmail());
+                //client info
+                CustomerRequestMP customerMP = new CustomerRequestMP();
+                customerMP.setFirstName(client.getClientDetails().getName());
+                customerMP.setLastName(client.getClientDetails().getLastName());
+                customerMP.setEmail(client.getClientDetails().getEmail());
 
-                    //identification
-                    Identification identification = new Identification();
-                    identification.setNumber(client.getClientDetails().getDocumentNumber());
-                    identification.setType(client.getClientDetails().getDocumentType());
+                //identification
+                Identification identification = new Identification();
+                identification.setNumber(client.getClientDetails().getDocumentNumber());
+                identification.setType(client.getClientDetails().getDocumentType());
 
-                    //phone
+                //phone
+                Phone phone = new Phone();
+                phone.setNumber("99999999999");
+                phone.setAreaCode("99");
 
-                    Phone phone = new Phone();
-                    phone.setNumber("99999999999");
-                    phone.setAreaCode("99");
+                customerMP.setPhone(phone);
+                customerMP.setAddress(addressRequest);
+                customerMP.setIdentification(identification);
 
-                    customerMP.setPhone(phone);
-                    customerMP.setAddress(addressRequest);
-                    customerMP.setIdentification(identification);
+                Customer customer = clientServiceMP.createClient(customerMP);
 
-                    Customer customer = clientServiceMP.createClient(customerMP);
-
-                    if (!Objects.equals(customer, null)) {
-                        return customer;
-                    } else {
-                        throw new RuntimeException("USR-0004");
-                    }
+                if (!Objects.equals(customer, null)) {
+                    return customer;
+                } else {
+                    throw new RuntimeException("USR-0004");
                 }
             }
         } catch (MPException e) {
