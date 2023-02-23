@@ -1,6 +1,7 @@
 package br.com.kitplus.utils;
 
 import br.com.kitplus.repository.service.ErrorService;
+import com.mercadopago.exceptions.MPApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -42,6 +43,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.setTimestamp(localDateTime);
         String msg = errorService.searchByErrorCode(ex.getMessage());
         apiError.setMessage(msg);
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(MPApiException.class)
+    protected ResponseEntity<Object> handleMPException(MPApiException ex) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ErrorsStack apiError = new ErrorsStack(BAD_REQUEST);
+        apiError.setTimestamp(localDateTime);
+        apiError.setMessage(ex.getApiResponse().getContent());
         return buildResponseEntity(apiError);
     }
 }

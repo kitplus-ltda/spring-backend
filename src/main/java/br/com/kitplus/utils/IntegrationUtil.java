@@ -32,6 +32,7 @@ public class IntegrationUtil {
         connection.setDoInput(true);
         connection.setRequestProperty("Accept", "application/json");
         connection.setRequestProperty("Token",  token);
+        connection.setRequestProperty("Authorization", "Bearer " + token);
         for(Map.Entry<String, String> entry: mapHeaders.entrySet()){
             connection.setRequestProperty(entry.getKey(), entry.getValue());
         }

@@ -1,39 +1,34 @@
 package br.com.kitplus.models.Clients;
 
-import com.mercadopago.client.common.IdentificationRequest;
-import com.mercadopago.client.common.PhoneRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
-import java.util.Map;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerRequest {
-    private  String email;
+public class CustomerRequestMP {
+    private  String email = null;
 
     /** Customer's first name. */
-    private  String firstName;
+    private  String firstName = null;
 
     /** Customer's last name. */
-    private  String lastName;
+    private  String lastName = null;
 
     /** Customer's phone. */
-    private  Phone phone;
+    private  Phone phone = null;
 
     /** Customer's identification. */
-    private  Identification identification;
+    private  Identification identification = null;
 
     /** Customer's default address. */
-    private  String defaultAddress;
+    private  String defaultAddress = null;
 
     /** Default address information. */
-    private CustomerAddressRequest address;
+    private CustomerAddressRequest address = null;
 
     /** Customer's default card. */
     private  String defaultCard;

@@ -1,9 +1,6 @@
 package br.com.kitplus.models.Clients;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
@@ -15,7 +12,7 @@ public class CustomerAddressRequest {
     /** Zip code. */
     public  String zipCode;
     /** Street name. */
-    public  String streetName;
+    public  String streetName = null;
     /** Street number. */
-    public  Integer streetNumber;
+    public  String streetNumber;
 }

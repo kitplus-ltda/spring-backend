@@ -1,7 +1,7 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.ClientResponseDTO;
-import br.com.kitplus.repository.service.LogsService;
+import br.com.kitplus.models.Clients.CustomerRequestMP;
 import br.com.kitplus.service.ClientService;
 import br.com.kitplus.utils.CustomerUtil;
 import br.com.kitplus.utils.IntegrationUtil;
@@ -22,64 +22,65 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class clientServiceImpl implements ClientService {
-        private static final Logger logger = LoggerFactory.getLogger(clientServiceImpl.class);
-        private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {
-        };
+    private static final Logger logger = LoggerFactory.getLogger(clientServiceImpl.class);
+    private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {
+    };
 
-        @Value("${url.mp}")
-        private String urlMp;
+    @Value("${url.mp}")
+    private String urlMp;
 
-        @Autowired
-        private IntegrationUtil integrationUtil;
+    @Value("${access.token}")
+    private String token;
 
-        @Autowired
-        private LogsService logsService;
+    @Autowired
+    private IntegrationUtil integrationUtil;
 
-        @SneakyThrows
-        @Override
-        public ClientResponseDTO getCustomerClient(String email) throws MPException, MPApiException {
 
-                logger.info("Calling Client By Email MP");
-                // logsService.inrLog(email , "getCustomerClient");
+    @SneakyThrows
+    @Override
+    public ClientResponseDTO getCustomerClient(String email){
 
-                ResponseEntity<ClientResponseDTO> response = integrationUtil.getRestCall(
-                                urlMp + "/v1/customers/search?email=" + email,
-                                "GET",
-                                null,
-                                clientResponse, null);
+        logger.info("Calling Client By Email MP");
 
-                if (response.getBody() != null && response.getBody().getResults().size() != 0) {
-                        return response.getBody();
-                }
-                return null;
+        ResponseEntity<ClientResponseDTO> response = integrationUtil.getRestCall(
+                urlMp + "/v1/customers/search?email=" + email,
+                "GET",
+                null,
+                clientResponse,
+                token);
+
+        if (response.getBody() != null && response.getBody().getResults().size() != 0) {
+            return response.getBody();
         }
+        return null;
+    }
 
-        @Override
-        public Customer getCustomerById(String id) throws MPException, MPApiException {
-                logger.info("Calling  Client by id");
-                CustomerClient client = new CustomerClient();
-                return client.get(id);
-        }
+    @Override
+    public Customer getCustomerById(String id) throws MPException, MPApiException {
+        logger.info("Calling  Client by id");
+        CustomerClient client = new CustomerClient();
+        return client.get(id);
+    }
 
-        public Customer createClient(br.com.kitplus.models.Clients.CustomerRequest clientRequest)
-                        throws MPException, MPApiException {
-                logger.info("Calling Create Client");
-                CustomerClient client = new CustomerClient();
-                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "create");
-                return client.create(customerRequest);
-        }
+    public Customer createClient(CustomerRequestMP clientRequest)
+            throws MPException, MPApiException {
+        logger.info("Calling Create Client");
+        CustomerClient client = new CustomerClient();
+        CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "create");
+        return client.create(customerRequest);
+    }
 
-        @Override
-        public Customer updateClientInfo(String id, br.com.kitplus.models.Clients.CustomerRequest clientRequest)
-                        throws MPException, MPApiException {
-                logger.info("Calling Update Client");
-                CustomerClient client = new CustomerClient();
-                MPRequestOptions options = MPRequestOptions.builder()
-                 .connectionTimeout(10000)
-                 .connectionRequestTimeout(10000)
+    @Override
+    public Customer updateClientInfo(String id, CustomerRequestMP clientRequest)
+            throws MPException, MPApiException {
+        logger.info("Calling Update Client");
+        CustomerClient client = new CustomerClient();
+        MPRequestOptions options = MPRequestOptions.builder()
+                .connectionTimeout(10000)
+                .connectionRequestTimeout(10000)
                 .build();
-                CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "update");
-                return client.update(id, customerRequest, options);
-        }
+        CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "update");
+        return client.update(id, customerRequest, options);
+    }
 
 }

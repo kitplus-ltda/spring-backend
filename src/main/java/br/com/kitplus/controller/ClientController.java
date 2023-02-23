@@ -2,7 +2,7 @@ package br.com.kitplus.controller;
 
 import br.com.kitplus.Api.ClientsApi;
 import br.com.kitplus.models.Clients.ClientResponseDTO;
-import br.com.kitplus.models.Clients.CustomerRequest;
+import br.com.kitplus.models.Clients.CustomerRequestMP;
 import br.com.kitplus.service.CardsService;
 import br.com.kitplus.service.ClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -27,6 +28,7 @@ import java.io.IOException;
 @RequestMapping("/api/v1")
 @Controller
 @Api(value = "API Rest Kitplus")
+@Service
 
 public class ClientController implements ClientsApi {
     @Autowired
@@ -60,8 +62,8 @@ public class ClientController implements ClientsApi {
             throws MPException, MPApiException {
 
         ObjectMapper mapper = new ObjectMapper();
-        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,
-                CustomerRequest.class);
+        CustomerRequestMP customerReq = mapper.convertValue(customer,
+                CustomerRequestMP.class);
         Customer customerInfo = clientService.updateClientInfo(id, customerReq);
         if (customerInfo == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,8 +76,8 @@ public class ClientController implements ClientsApi {
             throws MPException, MPApiException {
 
         ObjectMapper mapper = new ObjectMapper();
-        br.com.kitplus.models.Clients.CustomerRequest customerReq = mapper.convertValue(customer,
-                CustomerRequest.class);
+        CustomerRequestMP customerReq = mapper.convertValue(customer,
+                CustomerRequestMP.class);
 
         Customer customerResponse = clientService.createClient(customerReq);
         if (customerResponse == null) {
