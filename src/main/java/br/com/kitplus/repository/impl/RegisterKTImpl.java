@@ -19,13 +19,16 @@ import java.security.NoSuchAlgorithmException;
 
 @Repository
 public class RegisterKTImpl implements RegisterService {
-    private static final Logger LOGGER  = LoggerFactory.getLogger(RegisterKTImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterKTImpl.class);
 
     @Autowired
     private JdbcTemplate JdbcTemplate;
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private UserRegisterEntityRepository userRegisterEntityRepository;
 
 
     @Override
@@ -73,5 +76,11 @@ public class RegisterKTImpl implements RegisterService {
             LOGGER.error(e.getMessage());
         }
     }
+    @Override
+    public void updateClientId(String idMP, Client client) {
+        userRegisterEntityRepository.updateIdPaymentIntegrationByDocumentNumber(
+                idMP, client.getClientDetails().getDocumentNumber());
+    }
+
 
 }

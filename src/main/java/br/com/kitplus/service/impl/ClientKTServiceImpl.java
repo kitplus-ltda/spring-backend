@@ -13,10 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.ObjectError;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -28,23 +26,40 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     RegisterService registerServiceDAO;
     @Autowired
     ValidateService validateService;
-
     @Autowired
     ClientService clientServiceMP;
 
     @Override
     @Transactional
-    public String registerClientKitPlus(Client client) throws Exception {
+    public void registerClientKitPlus(Client client) throws Exception {
         this.validateService.parametrizeClient(client);
         this.validateService.validateParamsClient(client);
-        this.searchCreateUserMP(client);
+
+        //Busca no MP se cliente já existe e recupera ID
+        ClientResponseDTO checkIfClientExistInMP =
+                clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
+
+        if (checkIfClientExistInMP.getResults() != null) {
+            int size = checkIfClientExistInMP.getResults().size();
+
+            for (int i = 0 ; i < size; i++) {
+                client.getClientDetails().setIdPaymentIntegration(
+                        checkIfClientExistInMP.getResults().get(i).getId());
+            }
+
+        }
+
         this.registerServiceDAO.register(client);
-
-        return client.getClientDetails().getIdPaymentIntegration();
-
     }
 
-    private void searchCreateUserMP(Client client) throws MPApiException {
+    @Override
+    public String updateClient(Client client, String id) {
+        this.registerServiceDAO.updateClientId(id, client);
+        return id;
+    }
+
+    @Override
+    public Customer searchCreateUserMP(Client client) throws MPApiException {
         try {
             ClientResponseDTO clientMP = clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
             if (Objects.equals(clientMP, null)) {
@@ -77,11 +92,11 @@ public class ClientKTServiceImpl implements ClientKitplusService {
                     customerMP.setAddress(addressRequest);
                     customerMP.setIdentification(identification);
 
-                    Customer customer =  clientServiceMP.createClient(customerMP);
+                    Customer customer = clientServiceMP.createClient(customerMP);
 
-                    if(!Objects.equals(customer,null)){
-                        client.getClientDetails().setIdPaymentIntegration(customer.getId());
-                    }else {
+                    if (!Objects.equals(customer, null)) {
+                        return customer;
+                    } else {
                         throw new RuntimeException("USR-0004");
                     }
                 }
@@ -90,7 +105,8 @@ public class ClientKTServiceImpl implements ClientKitplusService {
             LOGGER.error(String.valueOf(e.getCause()));
         } catch (MPApiException e) {
             LOGGER.error(String.valueOf(e.getApiResponse().getContent()));
-            throw new MPApiException("Error" , e.getApiResponse());
+            throw new MPApiException("Error", e.getApiResponse());
         }
+        return null;
     }
 }
