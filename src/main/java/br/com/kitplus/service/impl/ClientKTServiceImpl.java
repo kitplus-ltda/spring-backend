@@ -40,7 +40,7 @@ public class ClientKTServiceImpl implements ClientKitplusService {
         this.searchCreateUserMP(client);
         this.registerServiceDAO.register(client);
 
-        return "CREATED";
+        return client.getClientDetails().getIdPaymentIntegration();
 
     }
 
