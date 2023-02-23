@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.time.LocalDateTime;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -49,7 +50,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MPApiException.class)
     protected ResponseEntity<Object> handleMPException(MPApiException ex) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        ErrorsStack apiError = new ErrorsStack(BAD_REQUEST);
+        ErrorsStack apiError = new ErrorsStack(CREATED);
         apiError.setTimestamp(localDateTime);
         apiError.setMessage(ex.getApiResponse().getContent());
         return buildResponseEntity(apiError);

@@ -92,17 +92,22 @@ public class ClientKTServiceImpl implements ClientKitplusService {
         return null;
     }
 
-    private void searchMpClient(Client client) throws MPException, MPApiException {
+    private void searchMpClient(Client client) {
         //Busca no MP se cliente já existe e recupera ID
-        ClientResponseDTO checkIfClientExistInMP =
-                clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
-        if (checkIfClientExistInMP.getResults() != null) {
-            int size = checkIfClientExistInMP.getResults().size();
+        try {
+            ClientResponseDTO checkIfClientExistInMP =
+                    clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
 
-            for (int i = 0; i < size; i++) {
-                client.getClientDetails().setIdPaymentIntegration(
-                        checkIfClientExistInMP.getResults().get(i).getId());
+            if (!Objects.equals(checkIfClientExistInMP, null)) {
+                int size = checkIfClientExistInMP.getResults().size();
+
+                for (int i = 0; i < size; i++) {
+                    client.getClientDetails().setIdPaymentIntegration(
+                            checkIfClientExistInMP.getResults().get(i).getId());
+                }
             }
+        } catch (Exception e) {
+            LOGGER.warn("Erro na consulta do cliente");
         }
     }
 }
