@@ -1,6 +1,7 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.*;
+import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.repository.service.ValidateService;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -42,6 +44,12 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     public String updateClient(Client client, String id) {
         this.registerServiceDAO.updateClientId(id, client);
         return id;
+    }
+
+    @Override
+    public List<ResumeOrderDTO> getOrderByUser(String userId) {
+        List<ResumeOrderDTO> orders = registerServiceDAO.getOrderById(userId);
+        return orders;
     }
 
     @Override

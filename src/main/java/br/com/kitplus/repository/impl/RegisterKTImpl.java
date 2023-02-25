@@ -1,9 +1,10 @@
 package br.com.kitplus.repository.impl;
 
 
+import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
-import br.com.kitplus.repository.entity.UserSignInEntityRepository;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
+import br.com.kitplus.repository.mapper.ResumeOrderListRowMapper;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import org.slf4j.Logger;
@@ -13,8 +14,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -76,10 +77,61 @@ public class RegisterKTImpl implements RegisterService {
             LOGGER.error(e.getMessage());
         }
     }
+
     @Override
     public void updateClientId(String idMP, Client client) {
         userRegisterEntityRepository.updateIdPaymentIntegrationByDocumentNumber(
                 idMP, client.getClientDetails().getDocumentNumber());
+    }
+
+    @Override
+    public List<ResumeOrderDTO> getOrderById(String userId) {
+        try {
+            String sql = "select" +
+                    " orde.id_order ," +
+                    " orde.cod_rastr_entr ," +
+                    " orde.hora_data ," +
+                    " orde.quantidade ," +
+                    " orde.ref_rastr_entr ," +
+                    " ur.user_id ," +
+                    " ur.document_number ," +
+                    " ur.user_email ," +
+                    " ur.name ," +
+                    " ur.last_name ," +
+                    " ua.city ," +
+                    " ua.neighborhood ," +
+                    " ua.`number` ," +
+                    " ua.state ," +
+                    " ua.street ," +
+                    " ua.zipcode ," +
+                    " tp.nome ," +
+                    " tp.descricao ," +
+                    " tp.altura ," +
+                    " tp.largura ," +
+                    " tp.comprimento ," +
+                    " tp.preco ," +
+                    " tc.name as product_category ," +
+                    " usi.`user`  " +
+                    " from" +
+                    " user_register ur ," +
+                    " user_sign_in usi ," +
+                    " user_address ua ," +
+                    " tbl_product tp ," +
+                    " tbl_categories tc ," +
+                    " tbl_order orde " +
+                    " where " +
+                    " orde.product_id = tp.product_id" +
+                    " and orde.user_sign_in = usi.user_sign_id" +
+                    " and orde.address_id = ua.address_id" +
+                    " and tc.category_id = tp.category_id ;";
+
+           List<ResumeOrderDTO>  resumerOrder =  this.JdbcTemplate.query(sql, new ResumeOrderListRowMapper() );
+           return  resumerOrder;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
 
