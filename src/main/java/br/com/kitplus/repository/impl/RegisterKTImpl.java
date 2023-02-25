@@ -70,7 +70,7 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void register(Client client) {
+    public void registerClient(Client client) {
         try {
             this.entityManager.persist(client);
         } catch (Exception e) {

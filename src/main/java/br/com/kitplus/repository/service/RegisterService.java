@@ -11,7 +11,7 @@ import java.util.List;
 @Configurable
 public interface RegisterService {
      Client getClientDetails(Integer userId) throws Exception;
-     void register(Client client) throws Exception;
+     void registerClient(Client client) throws Exception;
      void updateClientId(String idMP, Client client);
      List<ResumeOrderDTO> getOrderById(String userId);
 }
