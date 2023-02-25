@@ -4,6 +4,7 @@ package br.com.kitplus.repository.impl;
 import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
+import br.com.kitplus.repository.mapper.ResumeOrderListRowMapper;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import org.slf4j.Logger;
@@ -109,7 +110,8 @@ public class RegisterKTImpl implements RegisterService {
                     " tp.largura ," +
                     " tp.comprimento ," +
                     " tp.preco ," +
-                    " tc.name as product_category" +
+                    " tc.name as product_category ," +
+                    " usi.`user`  " +
                     " from" +
                     " user_register ur ," +
                     " user_sign_in usi ," +
@@ -121,15 +123,15 @@ public class RegisterKTImpl implements RegisterService {
                     " orde.product_id = tp.product_id" +
                     " and orde.user_sign_in = usi.user_sign_id" +
                     " and orde.address_id = ua.address_id" +
-                    " and tc.category_id = tp.category_id ";
+                    " and tc.category_id = tp.category_id ;";
 
-            List<Map<String, Object>> list = this.JdbcTemplate.queryForList(sql);
-            System.out.println(list);
+           List<ResumeOrderDTO>  resumerOrder =  this.JdbcTemplate.query(sql, new ResumeOrderListRowMapper() );
+           return  resumerOrder;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return null;
         }
-        return null;
     }
 
 

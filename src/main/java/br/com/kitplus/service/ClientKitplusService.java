@@ -6,6 +6,8 @@ import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.resources.customer.Customer;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface ClientKitplusService {
    void registerClientKitPlus(Client client) throws Exception;
@@ -13,6 +15,6 @@ public interface ClientKitplusService {
    Customer searchCreateUserMP(Client client) throws MPApiException;
 
    String updateClient(Client client , String id);
-   ResumeOrderDTO getOrderByUser(String userId);
+   List<ResumeOrderDTO> getOrderByUser(String userId);
 
 }

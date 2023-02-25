@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -55,9 +56,9 @@ public class ClientKTController {
     }
 
     @GetMapping("/order_by_user/{userId}")
-    public ResponseEntity<ResumeOrderDTO> getOrderByUser (@PathVariable String userId){
-       clientKitplusService.getOrderByUser(userId);
-       return null;
+    public ResponseEntity<List<ResumeOrderDTO>> getOrderByUser (@PathVariable String userId){
+        List<ResumeOrderDTO> orders =  clientKitplusService.getOrderByUser(userId);
+       return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
 }

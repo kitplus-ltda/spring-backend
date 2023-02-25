@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -46,10 +47,9 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     }
 
     @Override
-    public ResumeOrderDTO getOrderByUser(String userId) {
-        registerServiceDAO.getOrderById(userId);
-        //TODO MAPEAR OBJETO RETORNADO DO BANCO
-        return null;
+    public List<ResumeOrderDTO> getOrderByUser(String userId) {
+        List<ResumeOrderDTO> orders = registerServiceDAO.getOrderById(userId);
+        return orders;
     }
 
     @Override
