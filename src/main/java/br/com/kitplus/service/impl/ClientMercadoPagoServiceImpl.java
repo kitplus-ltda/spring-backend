@@ -21,8 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientServiceImpl implements ClientService {
-    private static final Logger logger = LoggerFactory.getLogger(ClientServiceImpl.class);
+public class ClientMercadoPagoServiceImpl implements ClientService {
+    private static final Logger logger = LoggerFactory.getLogger(ClientMercadoPagoServiceImpl.class);
     private static final TypeReference<ClientResponseDTO> clientResponse = new TypeReference<>() {
     };
 

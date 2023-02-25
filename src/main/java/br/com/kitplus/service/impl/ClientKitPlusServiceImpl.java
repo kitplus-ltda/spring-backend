@@ -21,8 +21,8 @@ import java.util.Objects;
 
 
 @Service
-public class KitPlusClientServiceImpl implements ClientKitplusService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(KitPlusClientServiceImpl.class);
+public class ClientKitPlusServiceImpl implements ClientKitplusService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientKitPlusServiceImpl.class);
 
     @Autowired
     RegisterService registerServiceDAO;

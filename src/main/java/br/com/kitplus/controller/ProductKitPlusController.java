@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 @RequestMapping("/api/kitplus/v1/products")
 @Api(value = "API for registerClient and update kitplus user")
-public class KitPlusProductController {
+public class ProductKitPlusController {
 
     @PostMapping("/create_product")
     public void createProduct(ProductEntity product){
