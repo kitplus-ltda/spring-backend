@@ -18,7 +18,7 @@ import br.com.kitplus.models.Shippiment.dto.ShippmentResponseDTO;
 import br.com.kitplus.service.ShippmentService;
 
 @Service
-public class shippmentServiceImpl implements ShippmentService {
+public class ShippmentServiceImpl implements ShippmentService {
 
     /* (non-Javadoc)
      * @see br.com.kitplus.service.ShippmentService#simulator(br.com.kitplus.models.Shippiment.dto.ShippmentRequestDTO)

@@ -12,12 +12,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Configuration
-public class MPConfig implements IMPConfig {
+public class MPConfig {
 
     @Value("${access.token}")
     private String token;
 
-    @Override
     @Bean
     public  void setAcessToken() {
         MercadoPagoConfig.setAccessToken(token);

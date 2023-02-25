@@ -22,9 +22,9 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @Controller
-@RequestMapping("/api/kitplus/v1")
-@Api(value = "API for register and update kitplus user")
-public class ClientKTController {
+@RequestMapping("/api/kitplus/v1/client")
+@Api(value = "API for registerClient and update kitplus user")
+public class ClientKitPlusController {
 
     @Autowired
     RegisterService registerService;
