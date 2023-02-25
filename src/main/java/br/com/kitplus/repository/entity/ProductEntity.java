@@ -22,7 +22,8 @@ public class ProductEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
     private Long product_id;
-    private Long nome;
+
+    private String nome;
 
     @Column(length = 755)
     private String descricao;
@@ -34,8 +35,6 @@ public class ProductEntity implements Serializable {
 
     @Column(length = 755)
     private String caracteristicas;
-
-    private Long categoria_id;
 
     private int promocional;
 
