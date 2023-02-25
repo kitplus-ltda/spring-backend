@@ -13,5 +13,6 @@ public class ResumeOrderDTO {
     String orderId ;
     String orderDate;
     String user;
+    String status;
     List<OrderItemDTO> items;
 }
