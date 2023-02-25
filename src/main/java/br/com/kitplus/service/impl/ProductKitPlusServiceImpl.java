@@ -42,4 +42,10 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
     public List<ProductCategoriesEntity> getAllCategories() {
         return registerServiceDAO.getAllProductCategories();
     }
+
+    @Override
+    public void createCategory(String category) {
+        registerServiceDAO.createProductCategoty(category);
+
+    }
 }

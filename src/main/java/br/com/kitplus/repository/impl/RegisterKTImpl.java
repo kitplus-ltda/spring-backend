@@ -17,9 +17,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.sql.SQLException;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -34,7 +33,6 @@ public class RegisterKTImpl implements RegisterService {
 
     @Autowired
     private UserRegisterEntityRepository userRegisterEntityRepository;
-
 
     @Override
     public Client getClientDetails(Integer userId) throws Exception {
@@ -154,7 +152,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
 
             Query sql = entityManager.createQuery(
-                    "SELECT c FROM ProductCategoriesEntity c" );
+                    "SELECT c FROM ProductCategoriesEntity c");
             List<ProductCategoriesEntity> catergories = sql.getResultList();
             return catergories;
 
@@ -164,4 +162,14 @@ public class RegisterKTImpl implements RegisterService {
         }
     }
 
+    @Override
+    @Transactional
+    public void createProductCategoty(String category) {
+        try {
+            JdbcTemplate.update("INSERT INTO tbl_categories (name) VALUES (?) ", category);
+        } catch (Exception e) {
+            LOGGER.error("Falha ao criar categoria");
+            throw new RuntimeException("PRD-0005");
+        }
+    }
 }

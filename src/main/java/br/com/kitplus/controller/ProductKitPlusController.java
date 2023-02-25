@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -35,9 +33,15 @@ public class ProductKitPlusController {
     }
 
     @GetMapping("/get_categories")
-    public ResponseEntity<List<ProductCategoriesEntity>> getAllCategories(){
-        return new ResponseEntity<>( productKitPlusService.getAllCategories(), HttpStatus.OK);
+    public ResponseEntity<List<ProductCategoriesEntity>> getAllCategories() {
+        return new ResponseEntity<>(productKitPlusService.getAllCategories(), HttpStatus.OK);
 
+    }
+
+    @PostMapping("/create_category")
+    public ResponseEntity<HttpStatus> createCategory(@Valid @RequestParam String category) {
+        this.productKitPlusService.createCategory(category);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
