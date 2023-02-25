@@ -19,10 +19,11 @@ import java.util.List;
 
 public class ProductEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "product_id", nullable = false)
     private Long product_id;
 
+    @Column(nullable = false)
     private String nome;
 
     @Column(length = 755)
@@ -30,22 +31,28 @@ public class ProductEntity implements Serializable {
 
     @Column(length = 755)
     private String detalhes;
-    private BigDecimal preco;
 
+    @Column(nullable = false)
+    private BigDecimal preco;
 
     @Column(length = 755)
     private String caracteristicas;
 
     private int promocional;
 
+    @Column(nullable = false)
     private int comprimento;
 
+    @Column(nullable = false)
     private int largura;
 
+    @Column(nullable = false)
     private int altura;
 
+    @Column(nullable = false)
     private int quantidade;
 
+    @Column(nullable = false)
     private int peso;
 
     @OneToOne

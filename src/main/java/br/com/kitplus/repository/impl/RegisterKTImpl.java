@@ -2,6 +2,8 @@ package br.com.kitplus.repository.impl;
 
 
 import br.com.kitplus.models.ResumeOrderDTO;
+import br.com.kitplus.repository.entity.ProductCategoriesEntity;
+import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
 import br.com.kitplus.repository.mapper.ResumeOrderListRowMapper;
@@ -14,8 +16,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -30,7 +33,6 @@ public class RegisterKTImpl implements RegisterService {
 
     @Autowired
     private UserRegisterEntityRepository userRegisterEntityRepository;
-
 
     @Override
     public Client getClientDetails(Integer userId) throws Exception {
@@ -70,7 +72,7 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void register(Client client) {
+    public void registerClient(Client client) {
         try {
             this.entityManager.persist(client);
         } catch (Exception e) {
@@ -125,8 +127,8 @@ public class RegisterKTImpl implements RegisterService {
                     " and orde.address_id = ua.address_id" +
                     " and tc.category_id = tp.category_id ;";
 
-           List<ResumeOrderDTO>  resumerOrder =  this.JdbcTemplate.query(sql, new ResumeOrderListRowMapper() );
-           return  resumerOrder;
+            List<ResumeOrderDTO> resumerOrder = this.JdbcTemplate.query(sql, new ResumeOrderListRowMapper());
+            return resumerOrder;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -134,5 +136,40 @@ public class RegisterKTImpl implements RegisterService {
         }
     }
 
+    @Override
+    public void registerProduct(ProductEntity product) {
+        try {
+            entityManager.persist(product);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException("PRD-0005");
 
+        }
+    }
+
+    @Override
+    public List<ProductCategoriesEntity> getAllProductCategories() {
+        try {
+
+            Query sql = entityManager.createQuery(
+                    "SELECT c FROM ProductCategoriesEntity c");
+            List<ProductCategoriesEntity> catergories = sql.getResultList();
+            return catergories;
+
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException("PRD-0005");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void createProductCategoty(String category) {
+        try {
+            JdbcTemplate.update("INSERT INTO tbl_categories (name) VALUES (?) ", category);
+        } catch (Exception e) {
+            LOGGER.error("Falha ao criar categoria");
+            throw new RuntimeException("PRD-0005");
+        }
+    }
 }

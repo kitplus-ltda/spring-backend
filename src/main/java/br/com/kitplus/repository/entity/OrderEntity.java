@@ -22,25 +22,35 @@ public class OrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_order", nullable = false)
     private Long id_order;
+
+    @Column
     private String ref_rastr_entr;
+
+    @Column
     private String cod_rastr_entr;
+
+    @Column(nullable = false)
     private int quantidade;
+
+    @Column(nullable = false)
     private String hora_data;
+
+    @Column(nullable = false)
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id"  , nullable = false)
     UserRegisterEntity user_id_pk;
 
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     @OneToOne
     UserAddressEntity address_id_pk;
 
-    @JoinColumn(name = "user_sign_in")
+    @JoinColumn(name = "user_sign_in", nullable = false)
     @OneToOne
     UserSignInEntity user_sign_in_pk;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     ProductEntity product_id;
 }

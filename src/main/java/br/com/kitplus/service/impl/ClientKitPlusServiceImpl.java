@@ -21,8 +21,8 @@ import java.util.Objects;
 
 
 @Service
-public class ClientKTServiceImpl implements ClientKitplusService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientKTServiceImpl.class);
+public class ClientKitPlusServiceImpl implements ClientKitplusService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientKitPlusServiceImpl.class);
 
     @Autowired
     RegisterService registerServiceDAO;
@@ -37,7 +37,7 @@ public class ClientKTServiceImpl implements ClientKitplusService {
         this.validateService.parametrizeClient(client);
         this.validateService.validateParamsClient(client);
         this.searchMpClient(client);
-        this.registerServiceDAO.register(client);
+        this.registerServiceDAO.registerClient(client);
     }
 
     @Override
