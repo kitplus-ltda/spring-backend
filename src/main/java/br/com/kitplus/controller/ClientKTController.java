@@ -1,5 +1,6 @@
 package br.com.kitplus.controller;
 
+import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
@@ -52,4 +53,11 @@ public class ClientKTController {
 
         return new ResponseEntity<>("CREATED", HttpStatus.CREATED);
     }
+
+    @GetMapping("/order_by_user/{userId}")
+    public ResponseEntity<ResumeOrderDTO> getOrderByUser (@PathVariable String userId){
+       clientKitplusService.getOrderByUser(userId);
+       return null;
+    }
+
 }

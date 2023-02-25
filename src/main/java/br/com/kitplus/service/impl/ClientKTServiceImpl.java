@@ -1,6 +1,7 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.*;
+import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.repository.service.ValidateService;
@@ -42,6 +43,13 @@ public class ClientKTServiceImpl implements ClientKitplusService {
     public String updateClient(Client client, String id) {
         this.registerServiceDAO.updateClientId(id, client);
         return id;
+    }
+
+    @Override
+    public ResumeOrderDTO getOrderByUser(String userId) {
+        registerServiceDAO.getOrderById(userId);
+        //TODO MAPEAR OBJETO RETORNADO DO BANCO
+        return null;
     }
 
     @Override
