@@ -26,6 +26,7 @@ public class OrderEntity implements Serializable {
     private String cod_rastr_entr;
     private int quantidade;
     private String hora_data;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -39,6 +40,7 @@ public class OrderEntity implements Serializable {
     @OneToOne
     UserSignInEntity user_sign_in_pk;
 
-    @OneToMany
-    List<ProductEntity> product_id;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    ProductEntity product_id;
 }

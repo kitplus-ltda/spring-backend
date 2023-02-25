@@ -1,5 +1,6 @@
 package br.com.kitplus.controller;
 
+import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -52,4 +54,11 @@ public class ClientKTController {
 
         return new ResponseEntity<>("CREATED ", HttpStatus.CREATED);
     }
+
+    @GetMapping("/order_by_user/{userId}")
+    public ResponseEntity<List<ResumeOrderDTO>> getOrderByUser (@PathVariable String userId){
+        List<ResumeOrderDTO> orders =  clientKitplusService.getOrderByUser(userId);
+       return new ResponseEntity<>(orders, HttpStatus.OK);
+    }
+
 }
