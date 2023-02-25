@@ -50,6 +50,6 @@ public class ClientKTController {
             return new ResponseEntity<>(clientRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("CREATED", HttpStatus.CREATED);
+        return new ResponseEntity<>("CREATED ", HttpStatus.CREATED);
     }
 }
