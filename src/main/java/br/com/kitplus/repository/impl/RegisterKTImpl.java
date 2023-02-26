@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,6 +30,7 @@ public class RegisterKTImpl implements RegisterService {
     private JdbcTemplate JdbcTemplate;
 
     @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
@@ -171,5 +173,20 @@ public class RegisterKTImpl implements RegisterService {
             LOGGER.error("Falha ao criar categoria");
             throw new RuntimeException("PRD-0005");
         }
+    }
+
+    @Override
+    @Transactional
+    public void removeProductCategory(String idCategory) {
+        try {
+            Query sql = this.entityManager.createQuery(
+                    "DELETE FROM ProductCategoriesEntity c WHERE c.category_id = :id");
+            sql.setParameter("id", Long.parseLong(idCategory));
+            sql.executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error("Falha ao criar categoria");
+            throw new RuntimeException("PRD-0005");
+        }
+
     }
 }

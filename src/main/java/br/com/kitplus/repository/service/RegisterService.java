@@ -19,4 +19,5 @@ public interface RegisterService {
      void registerProduct(ProductEntity product);
      List<ProductCategoriesEntity> getAllProductCategories();
      void createProductCategoty(ProductCategoriesEntity category);
+     void removeProductCategory(String idCategory);
 }

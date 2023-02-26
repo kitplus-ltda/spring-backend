@@ -44,4 +44,11 @@ public class ProductKitPlusController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @DeleteMapping("remove_category/{id}")
+    public ResponseEntity<HttpStatus> createCategory(@Valid @PathVariable String id) {
+        this.productKitPlusService.removeCategory(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }

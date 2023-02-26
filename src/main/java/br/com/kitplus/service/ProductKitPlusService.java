@@ -9,5 +9,6 @@ public interface ProductKitPlusService {
     void createProduct(ProductEntity product);
     List<ProductCategoriesEntity> getAllCategories();
     void createCategory(ProductCategoriesEntity category);
+    void removeCategory(String idCategory);
 
 }

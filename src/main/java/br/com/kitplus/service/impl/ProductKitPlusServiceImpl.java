@@ -37,4 +37,9 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
         registerServiceDAO.createProductCategoty(category);
 
     }
+
+    @Override
+    public void removeCategory(String idCategory) {
+        registerServiceDAO.removeProductCategory(idCategory);
+    }
 }
