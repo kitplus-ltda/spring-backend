@@ -2,7 +2,7 @@ package br.com.kitplus.controller;
 
 import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.service.ClientKitplusService;
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import com.mercadopago.resources.customer.Customer;
 import org.springframework.http.HttpStatus;

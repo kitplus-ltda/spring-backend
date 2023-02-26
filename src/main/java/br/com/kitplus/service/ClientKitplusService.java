@@ -1,7 +1,7 @@
 package br.com.kitplus.service;
 
 import br.com.kitplus.models.ResumeOrderDTO;
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.resources.customer.Customer;
 import org.springframework.stereotype.Service;

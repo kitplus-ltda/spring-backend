@@ -1,7 +1,7 @@
 package br.com.kitplus.repository.mapper;
 
 
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

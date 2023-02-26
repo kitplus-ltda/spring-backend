@@ -2,7 +2,7 @@ package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.*;
 import br.com.kitplus.models.ResumeOrderDTO;
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.repository.service.ValidateService;
 import br.com.kitplus.service.ClientKitplusService;

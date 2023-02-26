@@ -2,7 +2,7 @@ package br.com.kitplus.service.impl;
 
 import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
 import br.com.kitplus.repository.entity.UserSignInEntityRepository;
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 import br.com.kitplus.repository.service.ValidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
