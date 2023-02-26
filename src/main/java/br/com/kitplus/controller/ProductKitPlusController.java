@@ -39,7 +39,7 @@ public class ProductKitPlusController {
     }
 
     @PostMapping("/create_category")
-    public ResponseEntity<HttpStatus> createCategory(@Valid @RequestParam String category) {
+    public ResponseEntity<HttpStatus> createCategory(@Valid @RequestBody ProductCategoriesEntity category) {
         this.productKitPlusService.createCategory(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }

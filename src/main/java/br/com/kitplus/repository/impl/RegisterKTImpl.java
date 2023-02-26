@@ -164,9 +164,9 @@ public class RegisterKTImpl implements RegisterService {
 
     @Override
     @Transactional
-    public void createProductCategoty(String category) {
+    public void createProductCategoty(ProductCategoriesEntity category) {
         try {
-            JdbcTemplate.update("INSERT INTO tbl_categories (name) VALUES (?) ", category);
+            this.entityManager.persist(category);
         } catch (Exception e) {
             LOGGER.error("Falha ao criar categoria");
             throw new RuntimeException("PRD-0005");
