@@ -18,5 +18,6 @@ public interface RegisterService {
      List<ResumeOrderDTO> getOrderById(String userId);
      void registerProduct(ProductEntity product);
      List<ProductCategoriesEntity> getAllProductCategories();
-     void createProductCategoty(String category);
+     void createProductCategoty(ProductCategoriesEntity category);
+     void removeProductCategory(String idCategory);
 }

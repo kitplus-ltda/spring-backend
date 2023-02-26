@@ -39,9 +39,16 @@ public class ProductKitPlusController {
     }
 
     @PostMapping("/create_category")
-    public ResponseEntity<HttpStatus> createCategory(@Valid @RequestParam String category) {
+    public ResponseEntity<HttpStatus> createCategory(@Valid @RequestBody ProductCategoriesEntity category) {
         this.productKitPlusService.createCategory(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("remove_category/{id}")
+    public ResponseEntity<HttpStatus> createCategory(@Valid @PathVariable String id) {
+        this.productKitPlusService.removeCategory(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
