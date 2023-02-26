@@ -52,7 +52,7 @@ public class ClientKitPlusController {
             return new ResponseEntity<>(clientRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("CREATED", HttpStatus.CREATED);
+        return new ResponseEntity<>("CREATED ", HttpStatus.CREATED);
     }
 
     @GetMapping("/order_by_user/{userId}")
