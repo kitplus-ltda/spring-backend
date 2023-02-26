@@ -34,7 +34,7 @@ public class ProductKitPlusController {
 
     @GetMapping("get_products")
     public ResponseEntity<List<ProductEntity>>getProducts(){
-        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.CREATED);
+        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/get_categories")
@@ -46,7 +46,7 @@ public class ProductKitPlusController {
     @PostMapping("/create_category")
     public ResponseEntity<HttpStatus> createCategory(@Valid @RequestBody ProductCategoriesEntity category) {
         this.productKitPlusService.createCategory(category);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("remove_category/{id}")

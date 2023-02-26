@@ -141,7 +141,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             entityManager.persist(product);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error("FALHA AO CRIAR PRODUTOS {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
 
         }
@@ -155,8 +155,8 @@ public class RegisterKTImpl implements RegisterService {
             List product = sql.getResultList();
             return product;
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException("PRD-0005");
+            LOGGER.error("FALHA AO OBTER PRODUTOS {}",  e.getMessage());
+            throw new RuntimeException("GRL-0001");
 
         }
     }
@@ -171,8 +171,8 @@ public class RegisterKTImpl implements RegisterService {
             return categories;
 
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException("PRD-0005");
+            LOGGER.error("FALHA AO OBTER CATEGORIAS {}",  e.getMessage());
+            throw new RuntimeException("GRL-0001");
         }
     }
 
@@ -182,7 +182,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             this.entityManager.persist(category);
         } catch (Exception e) {
-            LOGGER.error("Falha ao criar categoria");
+            LOGGER.error("FALHA AO CRIAR CATEGORIA {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
         }
     }
@@ -196,7 +196,7 @@ public class RegisterKTImpl implements RegisterService {
             sql.setParameter("id", Long.parseLong(idCategory));
             sql.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("Falha ao criar categoria");
+            LOGGER.error("FALHA AO REMOVER CATEGORIA {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
         }
 
