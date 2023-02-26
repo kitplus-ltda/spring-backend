@@ -1,6 +1,6 @@
 package br.com.kitplus.repository.service;
 
-import br.com.kitplus.repository.model.Client;
+import br.com.kitplus.repository.entity.Client;
 
 public interface ValidateService {
 

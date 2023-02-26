@@ -2,12 +2,9 @@ package br.com.kitplus.repository.impl;
 
 
 import br.com.kitplus.models.ResumeOrderDTO;
-import br.com.kitplus.repository.entity.ProductCategoriesEntity;
-import br.com.kitplus.repository.entity.ProductEntity;
-import br.com.kitplus.repository.entity.UserRegisterEntityRepository;
+import br.com.kitplus.repository.entity.*;
 import br.com.kitplus.repository.mapper.RegistredClientRowMapper;
 import br.com.kitplus.repository.mapper.ResumeOrderListRowMapper;
-import br.com.kitplus.repository.model.Client;
 import br.com.kitplus.repository.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,9 +136,24 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void registerProduct(ProductEntity product) {
+    @Transactional
+    public void createProduct(ProductEntity product) {
         try {
             entityManager.persist(product);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException("PRD-0005");
+
+        }
+    }
+
+    @Override
+    public List<ProductEntity> getAllProducts() {
+        try {
+            Query sql = entityManager.createQuery(
+                    "SELECT c FROM ProductEntity c");
+            List product = sql.getResultList();
+            return product;
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             throw new RuntimeException("PRD-0005");
@@ -155,8 +167,8 @@ public class RegisterKTImpl implements RegisterService {
 
             Query sql = entityManager.createQuery(
                     "SELECT c FROM ProductCategoriesEntity c");
-            List<ProductCategoriesEntity> catergories = sql.getResultList();
-            return catergories;
+            List categories = sql.getResultList();
+            return categories;
 
         } catch (Exception e) {
             LOGGER.error(e.getMessage());

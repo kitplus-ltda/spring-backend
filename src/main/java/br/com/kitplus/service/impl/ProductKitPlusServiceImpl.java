@@ -1,5 +1,6 @@
 package br.com.kitplus.service.impl;
 
+import br.com.kitplus.repository.entity.Product;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.repository.service.RegisterService;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
@@ -21,10 +23,33 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
 
 
     @Override
-    public void createProduct(ProductEntity product) {
+    @Transactional
+    public void createProduct(Product product) {
         LOGGER.info("Registrando produto -- {}", product.getNome());
-        // TODO VALIDAR PRODUTO E REGISTRAR NA BASE
-        registerServiceDAO.registerProduct(product);
+        ProductCategoriesEntity productCategories = new ProductCategoriesEntity();
+        productCategories.setCategory_id(product.getCategory_id());
+
+        ProductEntity productEntity = new ProductEntity();
+
+        productEntity.setAltura(product.getAltura());
+        productEntity.setCaracteristicas(product.getCaracteristicas());
+        productEntity.setComprimento(product.getComprimento());
+        productEntity.setDescricao(product.getDescricao());
+        productEntity.setDetalhes(product.getDetalhes());
+        productEntity.setLargura(product.getLargura());
+        productEntity.setNome(product.getNome());
+        productEntity.setPeso(product.getPeso());
+        productEntity.setPreco(product.getPreco());
+        productEntity.setPromocional(product.getPromocional());
+        productEntity.setQuantidade(product.getQuantidade());
+        productEntity.setCategory_id(productCategories);
+
+        registerServiceDAO.createProduct(productEntity);
+    }
+
+    @Override
+    public List<ProductEntity> getAllProducts() {
+        return registerServiceDAO.getAllProducts();
     }
 
     @Override
@@ -35,7 +60,6 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
     @Override
     public void createCategory(ProductCategoriesEntity category) {
         registerServiceDAO.createProductCategoty(category);
-
     }
 
     @Override

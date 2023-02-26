@@ -2,8 +2,8 @@ package br.com.kitplus.repository.service;
 
 import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
+import br.com.kitplus.repository.entity.Client;
 import br.com.kitplus.repository.entity.ProductEntity;
-import br.com.kitplus.repository.model.Client;
 import org.springframework.beans.factory.annotation.Configurable;
 
 import java.util.List;
@@ -16,7 +16,8 @@ public interface RegisterService {
      void registerClient(Client client) throws Exception;
      void updateClientId(String idMP, Client client);
      List<ResumeOrderDTO> getOrderById(String userId);
-     void registerProduct(ProductEntity product);
+     void createProduct(ProductEntity product);
+     List<ProductEntity> getAllProducts();
      List<ProductCategoriesEntity> getAllProductCategories();
      void createProductCategoty(ProductCategoriesEntity category);
      void removeProductCategory(String idCategory);

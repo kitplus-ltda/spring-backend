@@ -1,6 +1,7 @@
 package br.com.kitplus.controller;
 
 
+import br.com.kitplus.repository.entity.Product;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.service.ProductKitPlusService;
@@ -19,17 +20,21 @@ import java.util.List;
 @RestController
 @Controller
 @RequestMapping("/api/kitplus/v1/product")
-@Api(value = "API for registerClient and update kitplus user")
+@Api(value = "API for register  and update kitplus Products")
 public class ProductKitPlusController {
 
     @Autowired
     private ProductKitPlusService productKitPlusService;
 
     @PostMapping("/create_product")
-    public ResponseEntity<HttpStatus> createProduct(ProductEntity product) {
+    public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
         this.productKitPlusService.createProduct(product);
         return new ResponseEntity<>(HttpStatus.CREATED);
-        //TODO CALL METHOD FOR SAVE IN DATA BASE
+    }
+
+    @GetMapping("get_products")
+    public ResponseEntity<List<ProductEntity>>getProducts(){
+        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.CREATED);
     }
 
     @GetMapping("/get_categories")

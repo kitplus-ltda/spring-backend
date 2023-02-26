@@ -1,4 +1,4 @@
-package br.com.kitplus.repository.model;
+package br.com.kitplus.repository.entity;
 
 import br.com.kitplus.repository.entity.UserAddressEntity;
 import br.com.kitplus.repository.entity.UserRegisterEntity;
