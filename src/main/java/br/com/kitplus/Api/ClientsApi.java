@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 @CrossOrigin("*")
-@Api(value = "Get Client Informations")
+@Api(value = "Get ClientEntity Informations")
 @RequestMapping(value = "/client")
 
 public interface ClientsApi {

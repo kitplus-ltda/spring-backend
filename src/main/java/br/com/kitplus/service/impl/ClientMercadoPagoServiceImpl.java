@@ -40,7 +40,7 @@ public class ClientMercadoPagoServiceImpl implements ClientService {
     @Override
     public ClientResponseDTO getCustomerClient(String email){
 
-        logger.info("Calling Client By Email MP");
+        logger.info("Calling ClientEntity By Email MP");
 
         ResponseEntity<ClientResponseDTO> response = integrationUtil.getRestCall(
                 urlMp + "/v1/customers/search?email=" + email,
@@ -57,14 +57,14 @@ public class ClientMercadoPagoServiceImpl implements ClientService {
 
     @Override
     public Customer getCustomerById(String id) throws MPException, MPApiException {
-        logger.info("Calling  Client by id");
+        logger.info("Calling  ClientEntity by id");
         CustomerClient client = new CustomerClient();
         return client.get(id);
     }
 
     public Customer createClient(CustomerRequestMP clientRequest)
             throws MPException, MPApiException {
-        logger.info("Calling Create Client");
+        logger.info("Calling Create ClientEntity");
         CustomerClient client = new CustomerClient();
         CustomerRequest customerRequest = CustomerUtil.createCustomerRequest(clientRequest, "create");
         return client.create(customerRequest);
@@ -73,7 +73,7 @@ public class ClientMercadoPagoServiceImpl implements ClientService {
     @Override
     public Customer updateClientInfo(String id, CustomerRequestMP clientRequest)
             throws MPException, MPApiException {
-        logger.info("Calling Update Client");
+        logger.info("Calling Update ClientEntity");
         CustomerClient client = new CustomerClient();
         MPRequestOptions options = MPRequestOptions.builder()
                 .connectionTimeout(10000)

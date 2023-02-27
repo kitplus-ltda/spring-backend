@@ -2,7 +2,7 @@ package br.com.kitplus.service.impl;
 
 import br.com.kitplus.models.Clients.*;
 import br.com.kitplus.models.ResumeOrderDTO;
-import br.com.kitplus.repository.entity.Client;
+import br.com.kitplus.repository.entity.ClientEntity;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.repository.service.ValidateService;
 import br.com.kitplus.service.ClientKitplusService;
@@ -33,16 +33,16 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
 
     @Override
     @Transactional
-    public void registerClientKitPlus(Client client) throws Exception {
-        this.validateService.parametrizeClient(client);
-        this.validateService.validateParamsClient(client);
-        this.searchMpClient(client);
-        this.registerServiceDAO.registerClient(client);
+    public void registerClientKitPlus(ClientEntity clientEntity) throws Exception {
+        this.validateService.parametrizeClient(clientEntity);
+        this.validateService.validateParamsClient(clientEntity);
+        this.searchMpClient(clientEntity);
+        this.registerServiceDAO.registerClient(clientEntity);
     }
 
     @Override
-    public String updateClient(Client client, String id) {
-        this.registerServiceDAO.updateClientId(id, client);
+    public String updateClient(ClientEntity clientEntity, String id) {
+        this.registerServiceDAO.updateClientId(id, clientEntity);
         return id;
     }
 
@@ -53,26 +53,26 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
     }
 
     @Override
-    public Customer searchCreateUserMP(Client client) throws MPApiException {
+    public Customer searchCreateUserMP(ClientEntity clientEntity) throws MPApiException {
         try {
-            if (Objects.equals(client.getClientDetails().getIdPaymentIntegration(), null)) {
+            if (Objects.equals(clientEntity.getClientDetails().getIdPaymentIntegration(), null)) {
                 //address info
                 CustomerAddressRequest addressRequest = new CustomerAddressRequest();
-                addressRequest.setStreetName(client.getClientAddress().getStreet());
-                addressRequest.setStreetNumber(client.getClientAddress().getNumber());
-                addressRequest.setZipCode(client.getClientAddress().getZipcode());
-                addressRequest.setId(String.valueOf(client.getClientAddress().getAddress_id()));
+                addressRequest.setStreetName(clientEntity.getClientAddress().getStreet());
+                addressRequest.setStreetNumber(clientEntity.getClientAddress().getNumber());
+                addressRequest.setZipCode(clientEntity.getClientAddress().getZipcode());
+                addressRequest.setId(String.valueOf(clientEntity.getClientAddress().getAddress_id()));
 
-                //client info
+                //clientEntity info
                 CustomerRequestMP customerMP = new CustomerRequestMP();
-                customerMP.setFirstName(client.getClientDetails().getName());
-                customerMP.setLastName(client.getClientDetails().getLastName());
-                customerMP.setEmail(client.getClientDetails().getEmail());
+                customerMP.setFirstName(clientEntity.getClientDetails().getName());
+                customerMP.setLastName(clientEntity.getClientDetails().getLastName());
+                customerMP.setEmail(clientEntity.getClientDetails().getEmail());
 
                 //identification
                 Identification identification = new Identification();
-                identification.setNumber(client.getClientDetails().getDocumentNumber());
-                identification.setType(client.getClientDetails().getDocumentType());
+                identification.setNumber(clientEntity.getClientDetails().getDocumentNumber());
+                identification.setType(clientEntity.getClientDetails().getDocumentType());
 
                 //phone
                 Phone phone = new Phone();
@@ -100,17 +100,17 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
         return null;
     }
 
-    private void searchMpClient(Client client) {
+    private void searchMpClient(ClientEntity clientEntity) {
         //Busca no MP se cliente já existe e recupera ID
         try {
             ClientResponseDTO checkIfClientExistInMP =
-                    clientServiceMP.getCustomerClient(client.getUserSign().getEmail());
+                    clientServiceMP.getCustomerClient(clientEntity.getUserSign().getEmail());
 
             if (!Objects.equals(checkIfClientExistInMP, null)) {
                 int size = checkIfClientExistInMP.getResults().size();
 
                 for (int i = 0; i < size; i++) {
-                    client.getClientDetails().setIdPaymentIntegration(
+                    clientEntity.getClientDetails().setIdPaymentIntegration(
                             checkIfClientExistInMP.getResults().get(i).getId());
                 }
             }

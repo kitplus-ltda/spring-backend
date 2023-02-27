@@ -99,9 +99,9 @@ public class ClientController implements ClientsApi {
         return ResponseEntity.ok(cardsService.createCard(request));
     }
 
-    @GetMapping("/heath")
-    public String heathCheck() {
-        return "Everything is good!!";
+    @GetMapping("/health")
+    public ResponseEntity<String> heathCheck() {
+        return new ResponseEntity<>("Everything is good!!", HttpStatus.OK);
     }
 
 }

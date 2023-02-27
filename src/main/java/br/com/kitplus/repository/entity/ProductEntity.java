@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -54,8 +55,12 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false)
     private int peso;
 
-    @ManyToOne( fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category", nullable = false)
-    ProductCategoriesEntity category_id;
+    ProductCategoriesEntity category;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn
+    List<ProductImagesEntity> productImages;
 
 }

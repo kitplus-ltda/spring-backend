@@ -1,10 +1,6 @@
 package br.com.kitplus.repository.entity;
 
-import br.com.kitplus.repository.entity.UserAddressEntity;
-import br.com.kitplus.repository.entity.UserRegisterEntity;
-import br.com.kitplus.repository.entity.UserSignInEntity;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +14,9 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 
-public class Client {
+@Entity(name = "client")
+public class ClientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)

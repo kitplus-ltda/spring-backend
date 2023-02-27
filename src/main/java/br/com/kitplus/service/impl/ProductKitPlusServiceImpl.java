@@ -1,6 +1,7 @@
 package br.com.kitplus.service.impl;
 
-import br.com.kitplus.repository.entity.Product;
+import br.com.kitplus.repository.entity.ProductImagesEntity;
+import br.com.kitplus.repository.model.Product;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.repository.service.RegisterService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +31,7 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
         ProductCategoriesEntity productCategories = new ProductCategoriesEntity();
         productCategories.setCategory_id(product.getCategory_id());
 
+
         ProductEntity productEntity = new ProductEntity();
 
         productEntity.setAltura(product.getAltura());
@@ -42,7 +45,19 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
         productEntity.setPreco(product.getPreco());
         productEntity.setPromocional(product.getPromocional());
         productEntity.setQuantidade(product.getQuantidade());
-        productEntity.setCategory_id(productCategories);
+
+        productEntity.setCategory(productCategories);
+
+        List<ProductImagesEntity> productImages = new ArrayList<>();
+
+        for (int i = 0 ; i < product.getProductImages().size(); i++) {
+            ProductImagesEntity imagesEntity = new ProductImagesEntity();
+            imagesEntity.setImage(product.getProductImages().get(i).getUrl());
+            productImages.add(imagesEntity);
+
+        }
+
+        productEntity.setProductImages(productImages);
 
         registerServiceDAO.createProduct(productEntity);
     }
@@ -65,5 +80,10 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
     @Override
     public void removeCategory(String idCategory) {
         registerServiceDAO.removeProductCategory(idCategory);
+    }
+
+    @Override
+    public void removeAllProducts() {
+        registerServiceDAO.removeAllProducts();
     }
 }
