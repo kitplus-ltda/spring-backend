@@ -1,16 +1,16 @@
 package br.com.kitplus.repository.mapper;
 
 
-import br.com.kitplus.repository.entity.Client;
+import br.com.kitplus.repository.entity.ClientEntity;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RegistredClientRowMapper implements RowMapper<Client> {
-    public Client mapRow(ResultSet rs, int rowNum) throws SQLException {
+public class RegistredClientRowMapper implements RowMapper<ClientEntity> {
+    public ClientEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-       Client clientRegister = new Client();
+       ClientEntity clientEntityRegister = new ClientEntity();
 //        ClientDetails clientDetails = new ClientDetails();
 //        ClientAddress clientAddress = new ClientAddress();
 //        ClientDocuments clientDocuments = new ClientDocuments();
@@ -31,10 +31,10 @@ public class RegistredClientRowMapper implements RowMapper<Client> {
 //        clientDocuments.setDocumentType(rs.getString("document_type"));
 //
 //        clientDetails.setClientDocuments(clientDocuments);
-//        clientRegister.setClientAddress(clientAddress);
-//        clientRegister.setClientDetails(clientDetails);
+//        clientEntityRegister.setClientAddress(clientAddress);
+//        clientEntityRegister.setClientDetails(clientDetails);
 
-        return clientRegister;
+        return clientEntityRegister;
 
     }
 }

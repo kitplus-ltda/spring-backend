@@ -2,7 +2,7 @@ package br.com.kitplus.controller;
 
 import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.service.ClientKitplusService;
-import br.com.kitplus.repository.entity.Client;
+import br.com.kitplus.repository.entity.ClientEntity;
 import br.com.kitplus.repository.service.RegisterService;
 import com.mercadopago.resources.customer.Customer;
 import org.springframework.http.HttpStatus;
@@ -40,16 +40,16 @@ public class ClientKitPlusController {
     }
 
     @PostMapping("/create_user")
-    public ResponseEntity<String> createUser(@Valid @RequestBody Client clientRegister) throws Exception {
-        clientKitplusService.registerClientKitPlus(clientRegister);
-        Customer customer = clientKitplusService.searchCreateUserMP(clientRegister);
+    public ResponseEntity<String> createUser(@Valid @RequestBody ClientEntity clientEntityRegister) throws Exception {
+        clientKitplusService.registerClientKitPlus(clientEntityRegister);
+        Customer customer = clientKitplusService.searchCreateUserMP(clientEntityRegister);
 
         if (!Objects.equals(customer, null)) {
-            String id = clientKitplusService.updateClient(clientRegister, customer.getId());
+            String id = clientKitplusService.updateClient(clientEntityRegister, customer.getId());
             return new ResponseEntity<>(id, HttpStatus.CREATED);
         }
-        if (clientRegister.getClientDetails().getIdPaymentIntegration() != null) {
-            return new ResponseEntity<>(clientRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
+        if (clientEntityRegister.getClientDetails().getIdPaymentIntegration() != null) {
+            return new ResponseEntity<>(clientEntityRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
         }
 
         return new ResponseEntity<>("CREATED ", HttpStatus.CREATED);

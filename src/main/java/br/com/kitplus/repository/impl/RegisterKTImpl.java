@@ -34,7 +34,7 @@ public class RegisterKTImpl implements RegisterService {
     private UserRegisterEntityRepository userRegisterEntityRepository;
 
     @Override
-    public Client getClientDetails(Integer userId) throws Exception {
+    public ClientEntity getClientDetails(Integer userId) throws Exception {
         try {
 
             String sql = " select" +
@@ -61,8 +61,8 @@ public class RegisterKTImpl implements RegisterService {
                     " and adr.id_user_sign_in_address = reg.id_user_sign_in_register" +
                     " and sig.id = ? ;";
 
-            Client clientRegister = JdbcTemplate.queryForObject(sql, new RegistredClientRowMapper(), userId);
-            return clientRegister;
+            ClientEntity clientEntityRegister = JdbcTemplate.queryForObject(sql, new RegistredClientRowMapper(), userId);
+            return clientEntityRegister;
 
         } catch (Exception ex) {
             LOGGER.info(ex.getMessage());
@@ -71,18 +71,18 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void registerClient(Client client) {
+    public void registerClient(ClientEntity clientEntity) {
         try {
-            this.entityManager.persist(client);
+            this.entityManager.persist(clientEntity);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
     }
 
     @Override
-    public void updateClientId(String idMP, Client client) {
+    public void updateClientId(String idMP, ClientEntity clientEntity) {
         userRegisterEntityRepository.updateIdPaymentIntegrationByDocumentNumber(
-                idMP, client.getClientDetails().getDocumentNumber());
+                idMP, clientEntity.getClientDetails().getDocumentNumber());
     }
 
     @Override
@@ -141,7 +141,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             entityManager.persist(product);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error("FALHA AO CRIAR PRODUTOS {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
 
         }
@@ -152,11 +152,10 @@ public class RegisterKTImpl implements RegisterService {
         try {
             Query sql = entityManager.createQuery(
                     "SELECT c FROM ProductEntity c");
-            List product = sql.getResultList();
-            return product;
+            return sql.getResultList();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException("PRD-0005");
+            LOGGER.error("FALHA AO OBTER PRODUTOS {}",  e.getMessage());
+            throw new RuntimeException("GRL-0001");
 
         }
     }
@@ -171,8 +170,8 @@ public class RegisterKTImpl implements RegisterService {
             return categories;
 
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException("PRD-0005");
+            LOGGER.error("FALHA AO OBTER CATEGORIAS {}",  e.getMessage());
+            throw new RuntimeException("GRL-0001");
         }
     }
 
@@ -182,7 +181,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             this.entityManager.persist(category);
         } catch (Exception e) {
-            LOGGER.error("Falha ao criar categoria");
+            LOGGER.error("FALHA AO CRIAR CATEGORIA {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
         }
     }
@@ -196,9 +195,21 @@ public class RegisterKTImpl implements RegisterService {
             sql.setParameter("id", Long.parseLong(idCategory));
             sql.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("Falha ao criar categoria");
+            LOGGER.error("FALHA AO REMOVER CATEGORIA {}",  e.getMessage());
             throw new RuntimeException("PRD-0005");
         }
 
+    }
+
+    @Override
+    @Transactional
+    public void removeAllProducts() {
+        try {
+            this.entityManager.createQuery("DELETE FROM ProductEntity ").executeUpdate();
+            this.entityManager.createQuery("DELETE FROM ProductImagesEntity ").executeUpdate();
+        } catch (Exception e) {
+            LOGGER.error("FALHA AO REMOVER PRODUTOS {}", e.getMessage());
+            throw new RuntimeException("PRD-0005");
+        }
     }
 }

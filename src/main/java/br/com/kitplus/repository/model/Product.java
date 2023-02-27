@@ -1,11 +1,12 @@
-package br.com.kitplus.repository.entity;
+package br.com.kitplus.repository.model;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @ApiModel
@@ -35,4 +36,7 @@ public class Product {
     private int peso;
 
     private Long category_id;
+
+    private List<ProductImage> productImages;
+
 }

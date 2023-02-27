@@ -1,7 +1,7 @@
 package br.com.kitplus.controller;
 
 
-import br.com.kitplus.repository.entity.Product;
+import br.com.kitplus.repository.model.Product;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.service.ProductKitPlusService;
@@ -34,22 +34,28 @@ public class ProductKitPlusController {
 
     @GetMapping("get_products")
     public ResponseEntity<List<ProductEntity>>getProducts(){
-        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.CREATED);
+        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/get_categories")
+    @DeleteMapping("remove_all_products")
+    public ResponseEntity<HttpStatus> removeAllProducts(){
+        this.productKitPlusService.removeAllProducts();
+        return new ResponseEntity<>( HttpStatus.OK);
+    }
+
+    @GetMapping("/category")
     public ResponseEntity<List<ProductCategoriesEntity>> getAllCategories() {
         return new ResponseEntity<>(productKitPlusService.getAllCategories(), HttpStatus.OK);
 
     }
 
-    @PostMapping("/create_category")
+    @PostMapping("/category")
     public ResponseEntity<HttpStatus> createCategory(@Valid @RequestBody ProductCategoriesEntity category) {
         this.productKitPlusService.createCategory(category);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("remove_category/{id}")
+    @DeleteMapping("category/{id}")
     public ResponseEntity<HttpStatus> createCategory(@Valid @PathVariable String id) {
         this.productKitPlusService.removeCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
