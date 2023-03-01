@@ -1,9 +1,11 @@
 package br.com.kitplus.service.impl;
 
 import br.com.kitplus.repository.entity.ProductImagesEntity;
+import br.com.kitplus.repository.entity.ProductVideosEntity;
 import br.com.kitplus.repository.model.Product;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
+import br.com.kitplus.repository.model.ProductVideo;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.service.ProductKitPlusService;
 import org.slf4j.Logger;
@@ -49,16 +51,25 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
 
         productEntity.setCategory(productCategories);
 
+        //get all images
         List<ProductImagesEntity> productImages = new ArrayList<>();
-
-        for (int i = 0 ; i < product.getProductImages().size(); i++) {
+        for (int i = 0; i < product.getProductImages().size(); i++) {
             ProductImagesEntity imagesEntity = new ProductImagesEntity();
             imagesEntity.setImage(product.getProductImages().get(i).getUrl());
             productImages.add(imagesEntity);
 
         }
-
         productEntity.setProductImages(productImages);
+
+        //get all videos
+        List<ProductVideosEntity> productVideos = new ArrayList<>();
+        for (int i = 0; i < product.getProductVideos().size(); i++) {
+            ProductVideosEntity productVideosEntity = new ProductVideosEntity();
+            productVideosEntity.setVideo(product.getProductVideos().get(i).getUrl());
+            productVideos.add(productVideosEntity);
+        }
+
+        productEntity.setProductVideos(productVideos);
 
         registerServiceDAO.createProduct(productEntity);
     }

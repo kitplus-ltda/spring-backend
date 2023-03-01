@@ -63,4 +63,8 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     List<ProductImagesEntity> productImages;
 
+    @ManyToMany( cascade = CascadeType.ALL)
+    @JoinColumn
+    List<ProductVideosEntity> productVideos;
+
 }

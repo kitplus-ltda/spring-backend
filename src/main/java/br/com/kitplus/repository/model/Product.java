@@ -39,4 +39,6 @@ public class Product {
 
     private List<ProductImage> productImages;
 
+    private List<ProductVideo> productVideos;
+
 }
