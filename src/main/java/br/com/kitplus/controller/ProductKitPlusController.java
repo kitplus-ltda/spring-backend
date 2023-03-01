@@ -33,14 +33,24 @@ public class ProductKitPlusController {
     }
 
     @GetMapping("get_products")
-    public ResponseEntity<List<ProductEntity>>getProducts(){
-        return new ResponseEntity<>( this.productKitPlusService.getAllProducts(), HttpStatus.OK);
+    public ResponseEntity<List<ProductEntity>> getProducts() {
+        return new ResponseEntity<>(this.productKitPlusService.getAllProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("get_product/{id}")
+    public ResponseEntity<ProductEntity> getProductById(@PathVariable String id) {
+        return new ResponseEntity<>(this.productKitPlusService.getProductById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("edit_product")
+    public ResponseEntity<ProductEntity> editProduct(@RequestBody @Valid ProductEntity productEntity) {
+        return new ResponseEntity<>(this.productKitPlusService.editProduct(productEntity), HttpStatus.OK);
     }
 
     @DeleteMapping("remove_all_products")
-    public ResponseEntity<HttpStatus> removeAllProducts(){
+    public ResponseEntity<HttpStatus> removeAllProducts() {
         this.productKitPlusService.removeAllProducts();
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/category")
@@ -56,7 +66,7 @@ public class ProductKitPlusController {
     }
 
     @DeleteMapping("category/{id}")
-    public ResponseEntity<HttpStatus> createCategory(@Valid @PathVariable String id) {
+    public ResponseEntity<HttpStatus> removeCategory(@Valid @PathVariable String id) {
         this.productKitPlusService.removeCategory(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

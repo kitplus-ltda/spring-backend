@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "tbl_categories")
 public class ProductCategoriesEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long category_id;
     String name;
 

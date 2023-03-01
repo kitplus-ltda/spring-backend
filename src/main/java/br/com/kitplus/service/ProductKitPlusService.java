@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface ProductKitPlusService {
     void createProduct(Product product);
+    ProductEntity getProductById(String idProduct);
+    ProductEntity editProduct (ProductEntity productEntity);
     void createCategory(ProductCategoriesEntity category);
     void removeCategory(String idCategory);
     void removeAllProducts();

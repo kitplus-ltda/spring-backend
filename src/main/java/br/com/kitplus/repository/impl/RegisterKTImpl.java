@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,7 +20,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Repository
+@Service
 public class RegisterKTImpl implements RegisterService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterKTImpl.class);
 
@@ -32,6 +33,7 @@ public class RegisterKTImpl implements RegisterService {
 
     @Autowired
     private UserRegisterEntityRepository userRegisterEntityRepository;
+
 
     @Override
     public ClientEntity getClientDetails(Integer userId) throws Exception {
@@ -154,7 +156,7 @@ public class RegisterKTImpl implements RegisterService {
                     "SELECT c FROM ProductEntity c");
             return sql.getResultList();
         } catch (Exception e) {
-            LOGGER.error("FALHA AO OBTER PRODUTOS {}",  e.getMessage());
+            LOGGER.error("FALHA AO OBTER PRODUTOS {}", e.getMessage());
             throw new RuntimeException("GRL-0001");
 
         }
@@ -170,8 +172,33 @@ public class RegisterKTImpl implements RegisterService {
             return categories;
 
         } catch (Exception e) {
-            LOGGER.error("FALHA AO OBTER CATEGORIAS {}",  e.getMessage());
+            LOGGER.error("FALHA AO OBTER CATEGORIAS {}", e.getMessage());
             throw new RuntimeException("GRL-0001");
+        }
+    }
+
+    @Override
+    public ProductEntity getProductById(String id) {
+        try {
+            Query sql = entityManager.createQuery(
+                    "SELECT c FROM ProductEntity c WHERE c.product_id = :id ").setParameter("id", Long.parseLong(id));
+            return (ProductEntity) sql.getSingleResult();
+
+        } catch (Exception e) {
+            LOGGER.error("FALHA AO OBTER PRODUTO {}", e.getMessage());
+            throw new RuntimeException("GRL-0001");
+        }
+    }
+
+    @Override
+    @Transactional
+    public ProductEntity editProductEntity(ProductEntity product) {
+        try {
+            entityManager.merge(product);
+            return getProductById(product.getProduct_id().toString());
+        } catch (Exception e) {
+            LOGGER.error("FALHA AO EDITAR PRODUTO {}", e.getMessage());
+            throw new RuntimeException("GRL-0002");
         }
     }
 
@@ -181,8 +208,8 @@ public class RegisterKTImpl implements RegisterService {
         try {
             this.entityManager.persist(category);
         } catch (Exception e) {
-            LOGGER.error("FALHA AO CRIAR CATEGORIA {}",  e.getMessage());
-            throw new RuntimeException("PRD-0005");
+            LOGGER.error("FALHA AO CRIAR CATEGORIA {}", e.getMessage());
+            throw new RuntimeException("GRL-0002");
         }
     }
 
@@ -195,7 +222,7 @@ public class RegisterKTImpl implements RegisterService {
             sql.setParameter("id", Long.parseLong(idCategory));
             sql.executeUpdate();
         } catch (Exception e) {
-            LOGGER.error("FALHA AO REMOVER CATEGORIA {}",  e.getMessage());
+            LOGGER.error("FALHA AO REMOVER CATEGORIA {}", e.getMessage());
             throw new RuntimeException("PRD-0005");
         }
 
@@ -212,4 +239,5 @@ public class RegisterKTImpl implements RegisterService {
             throw new RuntimeException("PRD-0005");
         }
     }
+
 }
