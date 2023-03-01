@@ -10,7 +10,6 @@ import java.util.List;
 
 
 
-@Configurable
 public interface RegisterService {
      void registerClient(ClientEntity clientEntity) throws Exception;
      void updateClientId(String idMP, ClientEntity clientEntity);
@@ -18,9 +17,13 @@ public interface RegisterService {
      void createProductCategoty(ProductCategoriesEntity category);
      void removeProductCategory(String idCategory);
      void removeAllProducts();
-
      ClientEntity getClientDetails(Integer userId) throws Exception;
      List<ResumeOrderDTO> getOrderById(String userId);
      List<ProductEntity> getAllProducts();
      List<ProductCategoriesEntity> getAllProductCategories();
+     ProductEntity getProductById(String id);
+     ProductEntity editProductEntity(ProductEntity product);
+
+
+
 }

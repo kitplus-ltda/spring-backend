@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -60,6 +61,22 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
         productEntity.setProductImages(productImages);
 
         registerServiceDAO.createProduct(productEntity);
+    }
+
+    @Override
+    public ProductEntity getProductById(String id) {
+        ProductEntity product = registerServiceDAO.getProductById(id);
+        if (!Objects.equals(product, null)) {
+            return product;
+        } else {
+            throw new RuntimeException("GRL-0001");
+        }
+    }
+
+    @Override
+    @Transactional
+    public ProductEntity editProduct(ProductEntity productEntity) {
+        return this.registerServiceDAO.editProductEntity(productEntity);
     }
 
     @Override

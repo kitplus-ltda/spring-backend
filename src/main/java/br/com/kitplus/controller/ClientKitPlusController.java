@@ -27,9 +27,6 @@ import java.util.Objects;
 public class ClientKitPlusController {
 
     @Autowired
-    RegisterService registerService;
-
-    @Autowired
     ClientKitplusService clientKitplusService;
 
 
