@@ -143,7 +143,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             entityManager.persist(product);
         } catch (Exception e) {
-            LOGGER.error("FALHA AO CRIAR PRODUTOS {}",  e.getMessage());
+            LOGGER.error("FALHA AO CRIAR PRODUTOS {}", e.getMessage());
             throw new RuntimeException("PRD-0005");
 
         }

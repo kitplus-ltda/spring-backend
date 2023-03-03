@@ -39,7 +39,7 @@ public class OrderEntity implements Serializable {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "user_id"  , nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     UserRegisterEntity user_id_pk;
 
     @JoinColumn(name = "address_id", nullable = false)

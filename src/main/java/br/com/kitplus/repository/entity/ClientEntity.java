@@ -23,7 +23,7 @@ public class ClientEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "client_details_user_id" )
+    @JoinColumn(name = "client_details_user_id")
     UserRegisterEntity clientDetails;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

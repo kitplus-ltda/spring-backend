@@ -55,7 +55,7 @@ public class ProductEntity implements Serializable {
     @Column(nullable = false)
     private int peso;
 
-    @ManyToOne(fetch = FetchType.EAGER )
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category", nullable = false)
     ProductCategoriesEntity category;
 
@@ -63,7 +63,7 @@ public class ProductEntity implements Serializable {
     @JoinColumn
     List<ProductImagesEntity> productImages;
 
-    @ManyToMany( cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn
     List<ProductVideosEntity> productVideos;
 

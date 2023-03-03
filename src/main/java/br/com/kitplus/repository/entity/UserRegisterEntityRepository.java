@@ -11,8 +11,12 @@ public interface UserRegisterEntityRepository extends JpaRepository<UserRegister
     @Modifying
     @Query("update UserRegisterEntity u set u.idPaymentIntegration = ?1 where u.documentNumber = ?2")
     int updateIdPaymentIntegrationByDocumentNumber(@NonNull String idPaymentIntegration, @NonNull String documentNumber);
+
     boolean existsByEmail(@NonNull String email);
+
     boolean existsByDocumentNumber(@NonNull String documentNumber);
+
     UserRegisterEntity findByEmail(String email);
+
     UserRegisterEntity findByDocumentNumberLike(@NonNull String documentNumber);
 }

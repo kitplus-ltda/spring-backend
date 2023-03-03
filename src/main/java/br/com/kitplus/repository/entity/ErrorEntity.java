@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class ErrorEntity implements Serializable {
 
     @Id
-    Long id ;
+    Long id;
 
     @Column
     String erro;

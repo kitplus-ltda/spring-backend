@@ -8,12 +8,19 @@ import java.util.List;
 
 public interface ProductKitPlusService {
     void createProduct(ProductDTO productDTO);
+
     ProductEntity getProductById(String idProduct);
-    ProductEntity editProduct (ProductEntity productEntity);
+
+    ProductEntity editProduct(ProductEntity productEntity);
+
     void createCategory(ProductCategoriesEntity category);
+
     void removeCategory(String idCategory);
+
     void removeAllProducts();
+
     List<ProductEntity> getAllProducts();
+
     List<ProductCategoriesEntity> getAllCategories();
 
 

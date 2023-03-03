@@ -38,7 +38,7 @@ public class UserSignInEntity {
     public String email;
 
     @ManyToOne
-    UserRegisterEntity  user_id_pk;
+    UserRegisterEntity user_id_pk;
 
 }
 
