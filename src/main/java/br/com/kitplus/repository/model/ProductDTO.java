@@ -12,7 +12,7 @@ import java.util.List;
 @ApiModel
 @Getter
 @Setter
-public class Product {
+public class ProductDTO {
     private String nome;
 
     private String descricao;

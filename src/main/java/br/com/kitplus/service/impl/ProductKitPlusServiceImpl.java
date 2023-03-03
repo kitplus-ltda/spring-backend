@@ -1,20 +1,18 @@
 package br.com.kitplus.service.impl;
 
-import br.com.kitplus.repository.entity.ProductImagesEntity;
-import br.com.kitplus.repository.entity.ProductVideosEntity;
-import br.com.kitplus.repository.model.Product;
+import br.com.kitplus.repository.model.ProductDTO;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
-import br.com.kitplus.repository.model.ProductVideo;
+import br.com.kitplus.repository.model.ProductEntityConverterDTO;
 import br.com.kitplus.repository.service.RegisterService;
 import br.com.kitplus.service.ProductKitPlusService;
+import br.com.kitplus.service.ValidateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,52 +24,19 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
     @Autowired
     RegisterService registerServiceDAO;
 
+    @Autowired
+    ProductEntityConverterDTO converter;
+
+    @Autowired
+    ValidateService validateService;
+
 
     @Override
     @Transactional
-    public void createProduct(Product product) {
-        LOGGER.info("Registrando produto -- {}", product.getNome());
-        ProductCategoriesEntity productCategories = new ProductCategoriesEntity();
-        productCategories.setCategory_id(product.getCategory_id());
-
-
-        ProductEntity productEntity = new ProductEntity();
-
-        productEntity.setAltura(product.getAltura());
-        productEntity.setCaracteristicas(product.getCaracteristicas());
-        productEntity.setComprimento(product.getComprimento());
-        productEntity.setDescricao(product.getDescricao());
-        productEntity.setDetalhes(product.getDetalhes());
-        productEntity.setLargura(product.getLargura());
-        productEntity.setNome(product.getNome());
-        productEntity.setPeso(product.getPeso());
-        productEntity.setPreco(product.getPreco());
-        productEntity.setPromocional(product.getPromocional());
-        productEntity.setQuantidade(product.getQuantidade());
-
-        productEntity.setCategory(productCategories);
-
-        //get all images
-        List<ProductImagesEntity> productImages = new ArrayList<>();
-        for (int i = 0; i < product.getProductImages().size(); i++) {
-            ProductImagesEntity imagesEntity = new ProductImagesEntity();
-            imagesEntity.setImage(product.getProductImages().get(i).getUrl());
-            productImages.add(imagesEntity);
-
-        }
-        productEntity.setProductImages(productImages);
-
-        //get all videos
-        List<ProductVideosEntity> productVideos = new ArrayList<>();
-        for (int i = 0; i < product.getProductVideos().size(); i++) {
-            ProductVideosEntity productVideosEntity = new ProductVideosEntity();
-            productVideosEntity.setVideo(product.getProductVideos().get(i).getUrl());
-            productVideos.add(productVideosEntity);
-        }
-
-        productEntity.setProductVideos(productVideos);
-
-        registerServiceDAO.createProduct(productEntity);
+    public void createProduct(ProductDTO productDTO) {
+        LOGGER.info("Registrando produto -- {}", productDTO.getNome());
+        validateService.validateProduct(productDTO);
+        registerServiceDAO.createProduct(converter.getProductEntity(productDTO));
     }
 
     @Override
@@ -87,6 +52,7 @@ public class ProductKitPlusServiceImpl implements ProductKitPlusService {
     @Override
     @Transactional
     public ProductEntity editProduct(ProductEntity productEntity) {
+        validateService.validateProduct(productEntity);
         return this.registerServiceDAO.editProductEntity(productEntity);
     }
 
