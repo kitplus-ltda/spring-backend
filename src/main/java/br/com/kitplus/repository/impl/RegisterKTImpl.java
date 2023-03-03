@@ -234,6 +234,7 @@ public class RegisterKTImpl implements RegisterService {
         try {
             this.entityManager.createQuery("DELETE FROM ProductEntity ").executeUpdate();
             this.entityManager.createQuery("DELETE FROM ProductImagesEntity ").executeUpdate();
+            this.entityManager.createQuery("DELETE FROM ProductVideosEntity ").executeUpdate();
         } catch (Exception e) {
             LOGGER.error("FALHA AO REMOVER PRODUTOS {}", e.getMessage());
             throw new RuntimeException("PRD-0005");

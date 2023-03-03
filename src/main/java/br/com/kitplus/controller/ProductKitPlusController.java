@@ -1,7 +1,7 @@
 package br.com.kitplus.controller;
 
 
-import br.com.kitplus.repository.model.Product;
+import br.com.kitplus.repository.model.ProductDTO;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
 import br.com.kitplus.service.ProductKitPlusService;
@@ -27,8 +27,8 @@ public class ProductKitPlusController {
     private ProductKitPlusService productKitPlusService;
 
     @PostMapping("/create_product")
-    public ResponseEntity<HttpStatus> createProduct(@RequestBody Product product) {
-        this.productKitPlusService.createProduct(product);
+    public ResponseEntity<HttpStatus> createProduct(@RequestBody ProductDTO productDTO) {
+        this.productKitPlusService.createProduct(productDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

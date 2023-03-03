@@ -4,7 +4,7 @@ import br.com.kitplus.models.Clients.*;
 import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.entity.ClientEntity;
 import br.com.kitplus.repository.service.RegisterService;
-import br.com.kitplus.repository.service.ValidateService;
+import br.com.kitplus.service.ValidateService;
 import br.com.kitplus.service.ClientKitplusService;
 import br.com.kitplus.service.ClientService;
 import com.mercadopago.exceptions.MPApiException;
