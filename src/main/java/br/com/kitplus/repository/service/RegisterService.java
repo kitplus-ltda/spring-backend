@@ -4,7 +4,6 @@ import br.com.kitplus.models.ResumeOrderDTO;
 import br.com.kitplus.repository.entity.ProductCategoriesEntity;
 import br.com.kitplus.repository.entity.ClientEntity;
 import br.com.kitplus.repository.entity.ProductEntity;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 public interface RegisterService {
      void registerClient(ClientEntity clientEntity) throws Exception;
-     void updateClientId(String idMP, ClientEntity clientEntity);
+     void updateClientId( ClientEntity clientEntity);
      void createProduct(ProductEntity product);
      void createProductCategoty(ProductCategoriesEntity category);
      void removeProductCategory(String idCategory);

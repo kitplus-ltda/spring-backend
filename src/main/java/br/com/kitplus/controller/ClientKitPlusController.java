@@ -39,23 +39,14 @@ public class ClientKitPlusController {
     @PostMapping("/create_user")
     public ResponseEntity<String> createUser(@Valid @RequestBody ClientEntity clientEntityRegister) throws Exception {
         clientKitplusService.registerClientKitPlus(clientEntityRegister);
-        Customer customer = clientKitplusService.searchCreateUserMP(clientEntityRegister);
+        return new ResponseEntity<>(clientEntityRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
 
-        if (!Objects.equals(customer, null)) {
-            String id = clientKitplusService.updateClient(clientEntityRegister, customer.getId());
-            return new ResponseEntity<>(id, HttpStatus.CREATED);
-        }
-        if (clientEntityRegister.getClientDetails().getIdPaymentIntegration() != null) {
-            return new ResponseEntity<>(clientEntityRegister.getClientDetails().getIdPaymentIntegration(), HttpStatus.CREATED);
-        }
-
-        return new ResponseEntity<>("CREATED", HttpStatus.CREATED);
     }
 
     @GetMapping("/order_by_user/{userId}")
-    public ResponseEntity<List<ResumeOrderDTO>> getOrderByUser (@PathVariable String userId){
-        List<ResumeOrderDTO> orders =  clientKitplusService.getOrderByUser(userId);
-       return new ResponseEntity<>(orders, HttpStatus.OK);
+    public ResponseEntity<List<ResumeOrderDTO>> getOrderByUser(@PathVariable String userId) {
+        List<ResumeOrderDTO> orders = clientKitplusService.getOrderByUser(userId);
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
 }

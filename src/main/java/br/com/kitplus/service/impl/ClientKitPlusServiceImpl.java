@@ -38,12 +38,12 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
         this.validateService.validateParamsClient(clientEntity);
         this.searchMpClient(clientEntity);
         this.registerServiceDAO.registerClient(clientEntity);
+        this.searchCreateUserMP(clientEntity);
     }
 
     @Override
-    public String updateClient(ClientEntity clientEntity, String id) {
-        this.registerServiceDAO.updateClientId(id, clientEntity);
-        return id;
+    public void updateClient(ClientEntity clientEntity) {
+        this.registerServiceDAO.updateClientId(clientEntity);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
     }
 
     @Override
-    public Customer searchCreateUserMP(ClientEntity clientEntity) throws MPApiException {
+    public void searchCreateUserMP(ClientEntity clientEntity) throws MPApiException {
         try {
             if (Objects.equals(clientEntity.getClientDetails().getIdPaymentIntegration(), null)) {
                 //address info
@@ -86,9 +86,8 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
                 Customer customer = clientServiceMP.createClient(customerMP);
 
                 if (!Objects.equals(customer, null)) {
-                    return customer;
-                } else {
-                    throw new RuntimeException("USR-0004");
+                    clientEntity.getClientDetails().setIdPaymentIntegration(customer.getId());
+                    this.updateClient(clientEntity);
                 }
             }
         } catch (MPException e) {
@@ -97,7 +96,6 @@ public class ClientKitPlusServiceImpl implements ClientKitplusService {
             LOGGER.error(String.valueOf(e.getApiResponse().getContent()));
             throw new MPApiException("Error", e.getApiResponse());
         }
-        return null;
     }
 
     private void searchMpClient(ClientEntity clientEntity) {

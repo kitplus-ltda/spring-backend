@@ -82,9 +82,9 @@ public class RegisterKTImpl implements RegisterService {
     }
 
     @Override
-    public void updateClientId(String idMP, ClientEntity clientEntity) {
+    public void updateClientId(ClientEntity clientEntity) {
         userRegisterEntityRepository.updateIdPaymentIntegrationByDocumentNumber(
-                idMP, clientEntity.getClientDetails().getDocumentNumber());
+                clientEntity.getClientDetails().getIdPaymentIntegration(), clientEntity.getClientDetails().getDocumentNumber());
     }
 
     @Override
